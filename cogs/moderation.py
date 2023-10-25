@@ -19,7 +19,7 @@ class moderation(commands.Cog):
             mute_role = role.id
             server_id = ctx.guild.id
             cursor.execute("SELECT mute_role_id FROM mute_role WHERE server_id = ?", )
-
+            #это нужно доделать 
 
 
 
