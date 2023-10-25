@@ -11,7 +11,7 @@ class test(commands.Cog):
 
     @commands.slash_command()
     async def lol(self, ctx):
-        await ctx.respond("Gjitk d gbple vhfpm")
+        await ctx.respond("Gjitk d gbple vhfpm") # я знаю что тут написано :moon_face:
 
 def setup(bot):
     bot.add_cog(test(bot))
