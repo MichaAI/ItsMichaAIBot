@@ -10,4 +10,4 @@ class fun(commands.Cog):
         await ctx.reply(f"Здравствуй, {ctx.message.author.mention}")
 
 def setup(bot):
-    bot.add_cog(test_(bot))
+    bot.add_cog(fun(bot))
