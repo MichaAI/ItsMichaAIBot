@@ -9,13 +9,15 @@ class core(commands.Cog):
     async def reload_cogs(ctx):
         for f in os.listdir("./cogs"):
             if not f.endswith(".py"): continue
-            if "cogs." + f[:-3] in bot.extensions:
-                bot.unload_extension("cogs." + f[:-3])
-                bot.load_extension("cogs." + f[:-3])
-            else:
-                bot.load_extension("cogs." + f[:-3])
-            await ctx.send("cogs." + f[:-3] + ' reloaded')
-          
+            try:
+                if "cogs." + f[:-3] in bot.extensions:
+                    bot.unload_extension("cogs." + f[:-3])
+                    bot.load_extension("cogs." + f[:-3])
+                else:
+                    bot.load_extension("cogs." + f[:-3])
+                await ctx.send("cogs." + f[:-3] + ' reloaded')
+            except Exception as e:
+                await ctx.send("Failed to reload cogs."+f[:-3]+": "+str(e))
 
 def setup(bot):
-    bot.add_cog(test_(bot))
+    bot.add_cog(core(bot))
