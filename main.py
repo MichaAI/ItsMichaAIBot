@@ -32,7 +32,7 @@ async def on_message(message):
         await message.channel.send(message.content[len(SETTINGS['persona_prefix']):], reference=(message.reference or None))
         await message.delete()
 
-@commands.slash_command()
+@bot.slash_command()
 @commands.is_owner()
 async def reload_cogs(ctx):
     for f in os.listdir("./cogs"):
