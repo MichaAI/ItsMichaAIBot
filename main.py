@@ -32,6 +32,20 @@ async def on_message(message):
         await message.channel.send(message.content[len(SETTINGS['persona_prefix']):], reference=(message.reference or None))
         await message.delete()
 
+@commands.slash_command()
+@commands.is_owner()
+async def reload_cogs(ctx):
+    for f in os.listdir("./cogs"):
+        if not f.endswith(".py"): continue
+        try:
+            if "cogs." + f[:-3] in bot.extensions:
+                bot.unload_extension("cogs." + f[:-3])
+                bot.load_extension("cogs." + f[:-3])
+            else:                bot.load_extension("cogs." + f[:-3])
+            await ctx.send("cogs." + f[:-3] + ' reloaded')
+        except Exception as e:
+            await ctx.send("Failed to reload cogs."+f[:-3]+": "+str(e))
+
 def main():
     for f in os.listdir("./cogs"):
         if f.endswith(".py"):

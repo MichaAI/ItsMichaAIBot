@@ -5,8 +5,8 @@ class test_(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @bot.slash_command(name='тест', description='Что-то делает.', guild_ids=None)
-    async def test_(ctx):
+    @commands.slash_command()
+    async def test_(self, ctx):
         await ctx.respond('Успешный тест!')
 
 def setup(bot):
