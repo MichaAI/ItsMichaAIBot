@@ -37,14 +37,24 @@ async def on_message(message):
 async def reload_cogs(ctx):
     for f in os.listdir("./cogs"):
         if not f.endswith(".py"): continue
-        try:
-            if "cogs." + f[:-3] in bot.extensions:
-                bot.unload_extension("cogs." + f[:-3])
-                bot.load_extension("cogs." + f[:-3])
-            else:                bot.load_extension("cogs." + f[:-3])
-            await ctx.send("cogs." + f[:-3] + ' reloaded')
+        if "cogs." + f[:-3] in bot.extensions:
+            try:
+                bot.unload_extensionf(f"cogs.{f[:-3]}")
+                bot.load_extension(f"cogs.{f[:-3]}")
+                await ctx.send(f"cog {f[:-3]} successfully reloaded")
+                print(f"Cog {f[:-3]} reloaded")
+            except Exception as e:
+                await ctx.send(f"Failed to reload cog {f[:-3]} - {e}")
+                print(f"ERROR! Cog {f[:-3]} reloading failed: {e}")
+        else:
+            try:
+                bot.load_extension(f"cogs.{f[:-3]}")
+                await ctx.send(f"cog {f[:-3]} successfully loaded")
+                print(f"Cog {f[:-3]} loaded")
+            except Exception as e:
+                await ctx.send(f"Failed to load cog {f[:-3]} - {e}"))
+                print(f"ERROR! Cog {f[:-3]} loading failed: {e}")
         except Exception as e:
-            await ctx.send("Failed to reload cogs."+f[:-3]+": "+str(e))
 
 def main():
     for f in os.listdir("./cogs"):
