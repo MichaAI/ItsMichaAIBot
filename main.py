@@ -43,25 +43,43 @@ async def on_message(message):
 @bot.slash_command()
 @commands.is_owner()
 async def reload_cogs(ctx):
+    embed = discord.Embed(title="Reloading cogs...")
+    load_suc = 0
+    load_err = 0
     for f in os.listdir("./cogs"):
         if not f.endswith(".py"): continue
         if "cogs." + f[:-3] in bot.extensions:
             try:
                 bot.unload_extension(f"cogs.{f[:-3]}")
                 bot.load_extension(f"cogs.{f[:-3]}")
-                await ctx.send(f"cog {f[:-3]} successfully reloaded")
+                embed.add_field(name=f"cog {f[:-3]} (OK)", value="Successfully reloaded", inline=False)
                 print(f"Cog {f[:-3]} reloaded")
             except Exception as e:
-                await ctx.send(f"Failed to reload cog {f[:-3]} - {e}")
+                load_err += 1
+                embed.add_field(name=f"cog {f[:-3]} (FAIL)", value=f"{e}")
                 print(f"ERROR! Cog {f[:-3]} reloading failed: {e}")
+            else:
+                load_suc += 1
         else:
             try:
                 bot.load_extension(f"cogs.{f[:-3]}")
-                await ctx.send(f"cog {f[:-3]} successfully loaded")
+                embed.add_field(name=f"cog {f[:-3]} (OK)", value="Successfully loaded", inline=False)
                 print(f"Cog {f[:-3]} loaded")
             except Exception as e:
-                await ctx.send(f"Failed to load cog {f[:-3]} - {e}")
+                load_err += 1
+                embed.add_field(name=f"cog {f[:-3]} (FAIL)", value=f"{e}")
                 print(f"ERROR! Cog {f[:-3]} loading failed: {e}")
+            else:
+                load_suc += 1
+
+    if load_suc == load_suc + load_err:
+        embed.set_footer(text=f"All cogs ({load_suc} reloaded successfully)")
+    elif load_err == load_suc + load_err:
+        embed.set_footer(text=f"ERROR!!! All cogs ({load_err} reloaded unsuccessfully)")
+    else:
+        embed.set_footer(text=f"Cogs (re)load: {load_suc}/{load_suc+load_err} | Cogs errored: {load_err}/{load_suc+load_err}")
+
+    await ctx.respond(embed=embed, ephemeral=False)
 
 def main():
     for f in os.listdir("./cogs"):
