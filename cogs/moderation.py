@@ -18,7 +18,7 @@ class moderation(commands.Cog):
             return
         mute_role_id = role.id
         server_id = ctx.guild.id
-        mutes_config = self.db_client.config.mutes.find({'guild_id': server_id})
+        mutes_config = list(self.db_client.config.mutes.find({'guild_id': server_id}))
         if len(mutes_config) == 0:
             self.db_client.config.mutes.insert_one(
                 {
@@ -27,6 +27,7 @@ class moderation(commands.Cog):
                 }
             )
             mutes_config = self.db_client.config.mutes.find({'guild_id': server_id})
+        mutes_config = mutes_config[0]
         if mutes_config['role_id'] == mute_role_id:
             await ctx.respond(embed=discord.Embed(title="Равное значение.",
                               description=f"Установленная роль мьюта равна данной.",
