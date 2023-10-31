@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 import os
+import signal
+import atexit
 import pymongo
 
 SETTINGS = {
@@ -50,6 +52,7 @@ async def on_message(message):
 @bot.slash_command()
 @commands.is_owner()
 async def reload_cogs(ctx):
+    print("[I] Cogs reload requested!")
     embed = discord.Embed(title="Reloading cogs...")
     load_suc = 0
     load_err = 0
@@ -60,31 +63,31 @@ async def reload_cogs(ctx):
                 bot.unload_extension(f"cogs.{f[:-3]}")
                 bot.load_extension(f"cogs.{f[:-3]}")
                 embed.add_field(name=f"cog {f[:-3]} (OK)", value="Successfully reloaded", inline=False)
-                print(f"Cog {f[:-3]} reloaded")
+                print(f"[I] Cog {f[:-3]} reloaded")
             except Exception as e:
                 load_err += 1
                 embed.add_field(name=f"cog {f[:-3]} (FAIL)", value=f"{e}")
-                print(f"ERROR! Cog {f[:-3]} reloading failed: {e}")
+                print(f"[E] ERROR! Cog {f[:-3]} reloading failed: {e}")
             else:
                 load_suc += 1
         else:
             try:
                 bot.load_extension(f"cogs.{f[:-3]}")
                 embed.add_field(name=f"cog {f[:-3]} (OK)", value="Successfully loaded", inline=False)
-                print(f"Cog {f[:-3]} loaded")
+                print(f"[I] Cog {f[:-3]} loaded")
             except Exception as e:
                 load_err += 1
                 embed.add_field(name=f"cog {f[:-3]} (FAIL)", value=f"{e}")
-                print(f"ERROR! Cog {f[:-3]} loading failed: {e}")
+                print(f"[E] ERROR! Cog {f[:-3]} loading failed: {e}")
             else:
                 load_suc += 1
 
     if load_suc == load_suc + load_err:
-        embed.set_footer(text=f"All cogs ({load_suc} reloaded successfully)")
+        embed.set_footer(text=f"All cogs ({load_suc}) were reloaded successfully")
     elif load_err == load_suc + load_err:
-        embed.set_footer(text=f"ERROR!!! All cogs ({load_err} reloaded unsuccessfully)")
+        embed.set_footer(text=f"ERROR!!! All cogs ({load_err}) was failed to reload! Call gary!!!")
     else:
-        embed.set_footer(text=f"Cogs (re)load: {load_suc}/{load_suc+load_err} | Cogs errored: {load_err}/{load_suc+load_err}")
+        embed.set_footer(text=f"Cogs (re)loaded: {load_suc}/{load_suc+load_err} | Cogs errored: {load_err}/{load_suc+load_err}")
 
     await ctx.respond(embed=embed, ephemeral=False)
 
@@ -92,14 +95,30 @@ def main():
     bot.dbclient = client = pymongo.MongoClient(SETTINGS['mongo']['prefix']+SETTINGS['mongo']['host']+":"+SETTINGS['mongo']['port'])
     
     for f in os.listdir("./cogs"):
-        if f.endswith(".py"):
-            try:
-                bot.load_extension("cogs." + f[:-3])
-                print(f"Cog {f[:-3]} loaded")
-            except Exception as e:
-                print(f"ERROR! Cog {f[:-3]} loading failed: {e}")
+        if not f.endswith(".py"): continue
+        try:
+            bot.load_extension("cogs." + f[:-3])
+            print(f"[I] Cog {f[:-3]} loaded")
+        except Exception as e:
+            print(f"[E] ERROR! Cog {f[:-3]} loading failed: {e}")
 
     bot.run(SETTINGS['token'])
+    handle_exit()
+
+def handle_exit(*args):
+    print("[I] EXIT signal received!\n[I] Proceeding with cleanup")
+    for f in os.listdir("./cogs"):
+        if not f.endswith(".py"): continue
+        try:
+            bot.unload_extension("cogs." + f[:-3])
+            print(f"[I] Cog {f[:-3]} unloaded.")
+        except Exception as e:
+            print(f"[E] ERROR! Cog {f[:-3]} unloading failed: {e}")
+    
 
 if __name__ == "__main__":
     main()
+
+atexit.register(handle_exit)
+signal.signal(signal.SIGTERM, handle_exit)
+signal.signal(signal.SIGINT, handle_exit)
