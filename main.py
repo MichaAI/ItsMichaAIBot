@@ -14,7 +14,7 @@ SETTINGS = {
     'persona_prefix': "Mb:",
 
     'mongo': {
-        'prefix': 'mongo://',
+        'prefix': 'mongodb://',
         'host': 'localhost',
         'port': '27017',
     },
