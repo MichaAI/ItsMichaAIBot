@@ -105,7 +105,7 @@ class moderation(commands.Cog):
                                   description=f"Формат времени неверен (XhYmZs - X часов Y минут Z секунд)",
                                   color=discord.Color.from_rgb(255, 0, 0)))
                 return
-        mutes = bot.mutes.get(ctx.guild.id, [])
+        mutes = self.bot.mutes.get(ctx.guild.id, [])
         try:
             role = discord.utils.get(ctx.guild.roles, id=mute_role_id)
             await user.add_roles(role)
@@ -121,7 +121,7 @@ class moderation(commands.Cog):
             'reason': reason,
             'start': datetime.datetime.now().timestamp()
         })
-        bot.mutes[ctx.guild.id] = mutes
+        self.bot.mutes[ctx.guild.id] = mutes
         self.sync_db(ctx.guild.id)
         await ctx.respond(embed=discord.Embed(title="Успех!",
                           description=f"{user.mention} был успешно замьючен на {mute_time} по причине {reason}",
