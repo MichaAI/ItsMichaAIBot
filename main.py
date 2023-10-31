@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import os
+import pymongo
 
 SETTINGS = {
     'token': None,
@@ -10,7 +11,13 @@ SETTINGS = {
 
     'log_messages': False,
     'owner_id': 629999906429337600,
-    'persona_prefix': "Mb:"
+    'persona_prefix': "Mb:",
+
+    'mongo': {
+        'prefix': 'mongo://',
+        'host': 'localhost',
+        'port': '27017',
+    },
 }
 
 try:
@@ -82,6 +89,8 @@ async def reload_cogs(ctx):
     await ctx.respond(embed=embed, ephemeral=False)
 
 def main():
+    bot.dbclient = client = pymongo.MongoClient(SETTINGS['mongo']['prefix']+SETTINGS['mongo']['host']+SETTINGS['mongo']['port'])
+    
     for f in os.listdir("./cogs"):
         if f.endswith(".py"):
             try:
