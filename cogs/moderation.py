@@ -18,6 +18,9 @@ class moderation(commands.Cog):
         async def _unmute_after(bot, mute):
             role = discord.utils.get(guild.roles, id=mute['role_id'])
             user = discord.utils.get(guild.members, id=mute['user_id'])
+            if mute['start'] + mute['time'] < datetime.datetime.now().timestamp():
+                await user.remove_roles(role)
+                return
 
             await asyncio.sleep((mute['start'] + mute['time']) - datetime.datetime.now().timestamp())
             await user.remove_roles(role)
@@ -29,11 +32,6 @@ class moderation(commands.Cog):
                 mutes = self.db_client.mutes.data.find({'guild_id': guild.id})
             bot.mutes[guild.id] = mutes[0]
             for mute in bot.mutes[guild.id]:
-                if mute['start'] + mute['time'] < datetime.datetime.now().timestamp():
-                    role = discord.utils.get(guild.roles, id=mute['role_id'])
-                    user = discord.utils.get(guild.members, id=mute['user_id'])
-                    await user.remove_roles(role)
-                    continue
                 asyncio.create_task(_unmute_after(bot, mute))
                     
 
