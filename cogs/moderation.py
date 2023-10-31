@@ -32,6 +32,7 @@ class moderation(commands.Cog):
                 mutes = self.db_client.mutes.data.find({'guild_id': guild.id})
             bot.mutes[guild.id] = mutes[0]
             for mute in bot.mutes[guild.id]:
+                print(mute)
                 asyncio.create_task(_unmute_after(bot, mute, guild))
                     
 
