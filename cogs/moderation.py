@@ -98,7 +98,7 @@ class moderation(commands.Cog):
             return
         mute_seconds = datetime.time(0)
         try:
-            mute_seconds = hms(mute_time)
+            mute_seconds = parse(mute_time)
         finally:
             if mute_seconds == datetime.time(0):
                 await ctx.respond(embed=discord.Embed(title="Неверный формат",
