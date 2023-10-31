@@ -15,7 +15,7 @@ class moderation(commands.Cog):
         self.bot.moderation_cog = self
         self.db_client = self.bot.dbclient
 
-        def _unmute_after(bot, mute):
+        async def _unmute_after(bot, mute):
             role = discord.utils.get(guild.roles, id=mute['role_id'])
             user = discord.utils.get(guild.members, id=mute['user_id'])
 
