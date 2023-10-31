@@ -15,7 +15,7 @@ class moderation(commands.Cog):
         self.bot.moderation_cog = self
         self.db_client = self.bot.dbclient
 
-        async def _unmute_after(bot, mute):
+        async def _unmute_after(bot, mute, guild):
             role = discord.utils.get(guild.roles, id=mute['role_id'])
             user = discord.utils.get(guild.members, id=mute['user_id'])
             if mute['start'] + mute['time'] < datetime.datetime.now().timestamp():
@@ -32,7 +32,7 @@ class moderation(commands.Cog):
                 mutes = self.db_client.mutes.data.find({'guild_id': guild.id})
             bot.mutes[guild.id] = mutes[0]
             for mute in bot.mutes[guild.id]:
-                asyncio.create_task(_unmute_after(bot, mute))
+                asyncio.create_task(_unmute_after(bot, mute, guild))
                     
 
     def sync_db(self, target_guild_id):
