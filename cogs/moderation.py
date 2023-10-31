@@ -42,7 +42,7 @@ class moderation(commands.Cog):
             self.db_client.mutes.data.insert_one({'guild_id': target_guild_id, 'data': []})
             mutes = self.db_client.mutes.data.find({'guild_id': target_guild_id})
         mutes = mutes[0]
-        self.db_client.mutes.data.update_one({'guild_id': target_guild_id}, {'$set': {'data': bot.mutes.get(target_guild_id, [])}})
+        self.db_client.mutes.data.update_one({'guild_id': target_guild_id}, {'$set': {'data': self.bot.mutes.get(target_guild_id, [])}})
 
     @commands.slash_command()
     async def set_mute_role(self, ctx, role: discord.Role):
