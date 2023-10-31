@@ -115,7 +115,7 @@ class moderation(commands.Cog):
             await ctx.respond(embed=discord.Embed(title="Недостаточно прав",
                               description=f"У бота недостаточно прав для выдачи мьюта",
                               color=discord.Color.from_rgb(255, 0, 0)))
-                return
+            return
         mutes.append({
             'user_id': user.id,
             'role_id': mute_role_id,
