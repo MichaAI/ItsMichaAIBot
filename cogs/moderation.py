@@ -11,29 +11,39 @@ class moderation(commands.Cog):
 
     @commands.slash_command()
     async def set_mute_role(self, ctx, role: discord.Role):
-        if ctx.author.guild_permissions.administrator:
-            mute_role_id = role.id
-            server_id = ctx.guild.id
-            cursor.execute("SELECT mute_role_id FROM mute_role WHERE server_id = ?", (server_id,))
-            mute_role = cursor.fetchall()
-            newrole = discord.utils.get(ctx.guild.roles, id=int(str(mute_role[0])[1:20]))
-            if newrole == role:
-                await ctx.respond(f"Роль {role} уже установленна в качестве роли мьюта")
-            else:
-                cursor.execute("INSERT OR REPLACE INTO mute_role (server_id, mute_role_id) VALUES (?, ?)",
-                               (server_id, mute_role_id))
-                conn.commit()
-                await ctx.respond(f"Роль мьюта установленна на {role}")
-        else:
-            await ctx.respond("Недостаточно полномочий")
+        if not ctx.author.guild_permissions.administrator:
+            await ctx.respond(embed=discord.Embed(title="Недостаточно полномочий.",
+                              description=f"Вам не хватает прав для исполнения команды.",
+                              color=discord.Color.from_rgb(255, 0, 0)))
+            return
+        mute_role_id = role.id
+        server_id = ctx.guild.id
+        mutes_config = self.db_client.config.mutes.find({'guild_id': server_id})
+        if len(mutes_config) == 0:
+            self.db_client.config.mutes.insert_one(
+                {
+                    'guild_id': server_id,
+                    'role_id': -1
+                }
+            )
+            mutes_config = self.db_client.config.mutes.find({'guild_id': server_id})
+        if mutes_config['role_id'] == mute_role_id:
+            await ctx.respond(embed=discord.Embed(title="Равное значение.",
+                              description=f"Установленная роль мьюта равна данной.",
+                              color=discord.Color.from_rgb(255, 0, 0)))
+            return
+        self.db_client.config.mutes.update_one({'guild_id': server_id}, {'$set': {'role_id': mute_role_id}})
+        await ctx.respond(embed=discord.Embed(title="Успех!",
+                          description=f"Роль мьюта установлена",
+                          color=discord.Color.from_rgb(0, 255, 0)))
 
     @commands.slash_command()
     async def mute(self, ctx, user: discord.Member, time: int, reson: str):
-        if ctx.author.guild_permissions.mute_members or ctx.author.guild_permissions.administrator:
-            await ctx.respond("[eq ,j,hf")
-        else:
-            await ctx.respond(embed = discord.Embed(title="Недостаточно полномочий",
-                                              description=f"Вам не хватает прав для исполнения комманды{commands.Context}"))
+        if not (ctx.author.guild_permissions.mute_members or ctx.author.guild_permissions.administrator):
+            await ctx.respond(embed=discord.Embed(title="Недостаточно полномочий",
+                              description=f"Вам не хватает прав для исполнения команды{commands.Context}"))
+            return
+        await ctx.respond("//TODO")
 
 
 
