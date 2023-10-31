@@ -89,7 +89,7 @@ async def reload_cogs(ctx):
     await ctx.respond(embed=embed, ephemeral=False)
 
 def main():
-    bot.dbclient = client = pymongo.MongoClient(SETTINGS['mongo']['prefix']+SETTINGS['mongo']['host']+SETTINGS['mongo']['port'])
+    bot.dbclient = client = pymongo.MongoClient(SETTINGS['mongo']['prefix']+SETTINGS['mongo']['host']+":"+SETTINGS['mongo']['port'])
     
     for f in os.listdir("./cogs"):
         if f.endswith(".py"):
