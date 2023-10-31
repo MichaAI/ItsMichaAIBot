@@ -97,15 +97,14 @@ class moderation(commands.Cog):
                               description=f"Роль мьюта не установлена.",
                               color=discord.Color.from_rgb(255, 0, 0)))
             return
-        mute_seconds = datetime.time(0)
+        mute_seconds = None
         try:
             mute_seconds = parse(mute_time)
-        finally:
-            if mute_seconds == datetime.time(0):
-                await ctx.respond(embed=discord.Embed(title="Неверный формат",
-                                  description=f"Формат времени неверен (XhYmZs - X часов Y минут Z секунд)",
-                                  color=discord.Color.from_rgb(255, 0, 0)))
-                return
+        except:
+            await ctx.respond(embed=discord.Embed(title="Неверный формат",
+                              description=f"Формат времени неверен (XhYmZs - X часов Y минут Z секунд)",
+                              color=discord.Color.from_rgb(255, 0, 0)))
+            return
         mutes = self.bot.mutes.get(ctx.guild.id, [])
         try:
             role = discord.utils.get(ctx.guild.roles, id=mute_role_id)
