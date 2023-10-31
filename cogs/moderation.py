@@ -29,13 +29,13 @@ class moderation(commands.Cog):
             mutes_config = self.db_client.config.mutes.find({'guild_id': server_id})
         mutes_config = mutes_config[0]
         if mutes_config['role_id'] == mute_role_id:
-            await ctx.respond(embed=discord.Embed(title="Равное значение.",
-                              description=f"Установленная роль мьюта равна данной.",
+            await ctx.respond(embed=discord.Embed(title="Ошибка!",
+                              description=f"Текущая роль мьюта уже установленна на {role.mention}",
                               color=discord.Color.from_rgb(255, 0, 0)))
             return
         self.db_client.config.mutes.update_one({'guild_id': server_id}, {'$set': {'role_id': mute_role_id}})
         await ctx.respond(embed=discord.Embed(title="Успех!",
-                          description=f"Роль мьюта установлена",
+                          description=f"Роль мьюта установленна на {role.mention}",
                           color=discord.Color.from_rgb(0, 255, 0)))
 
     @commands.slash_command()

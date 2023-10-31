@@ -6,7 +6,7 @@ class fun(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=["Привет", "привет"])
-    async def hi(ctx):
+    async def hi(self, ctx):
         await ctx.reply(f"Здравствуй, {ctx.message.author.mention}")
 
 def setup(bot):
