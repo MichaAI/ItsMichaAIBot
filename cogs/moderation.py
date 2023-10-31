@@ -117,7 +117,7 @@ class moderation(commands.Cog):
         mutes.append({
             'user_id': user.id,
             'role_id': mute_role_id,
-            'time': mute_seconds.total_seconds(),
+            'time': mute_seconds.hour*60*60 + mute_seconds.minute*60 + mute_seconds.second,
             'reason': reason,
             'start': datetime.datetime.now().timestamp()
         })
