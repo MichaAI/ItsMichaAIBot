@@ -30,7 +30,7 @@ class moderation(commands.Cog):
             if len(mutes) == 0:
                 self.db_client.mutes.data.insert_one({'guild_id': guild.id})
                 mutes = self.db_client.mutes.data.find({'guild_id': guild.id})
-            bot.mutes[guild.id] = mutes[0]
+            bot.mutes[guild.id] = mutes[0]['data']
             for mute in bot.mutes[guild.id]:
                 print(mute)
                 asyncio.create_task(_unmute_after(bot, mute, guild))
