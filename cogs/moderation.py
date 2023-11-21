@@ -46,6 +46,7 @@ class moderation(commands.Cog):
 
     @commands.slash_command()
     async def set_mute_role(self, ctx, role: discord.Role):
+        #бекдоры
         if not ctx.author.guild_permissions.administrator:
             await ctx.respond(embed=discord.Embed(title="Недостаточно полномочий.",
                               description=f"Вам не хватает прав для исполнения команды.",
