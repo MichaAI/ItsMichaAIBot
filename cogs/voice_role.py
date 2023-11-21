@@ -15,7 +15,7 @@ class voice(commands.Cog):
             role = discord.utils.get(member.guild.roles, name=role_name)
             if role is None: #если роли нету на сервере
                 await member.guild.create_role(name=role_name, mentionable=True) #coздаем ее
-            await member.add_role(role) #добавляем роль пользователю
+            await member.add_roles(role) #добавляем роль пользователю
         if before.channel is not None:
             role_name = before.channel.name
             role = discord.utils.get(member.guild.roles, name=role_name)
