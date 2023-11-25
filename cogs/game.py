@@ -10,7 +10,7 @@ class game(commands.Cog):
     async def game_test(self, ctx, seed: int, x: int, y: int):
         cave_map = generate_game(seed=seed, x_offset=x, y_offset=y)
         a = '\n'.join([''.join(str(cell) for cell in row) for row in cave_map])
-        await ctx.reply(a)
+        await ctx.respond(a)
 
 def setup(bot):
     bot.add_cog(game(bot))
