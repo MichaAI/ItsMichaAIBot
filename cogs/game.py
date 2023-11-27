@@ -7,7 +7,7 @@ class game_buttons(discord.ui.View):
         self.author = author
         super().__init__()
 
-    @discord.ui.Button(emoji='⏫', style=discord.ButtonStyle.green)
+    @discord.ui.button(emoji='⏫', style=discord.ButtonStyle.green)
     async def up_button(self, interaction: discord.Interaction):
         if interaction.user.id == self.author:
             await interaction.response.edit_messade(content='⏫', view=self)
