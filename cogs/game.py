@@ -26,4 +26,4 @@ class game(commands.Cog):
         await ctx.respond(a)
 
 def setup(bot):
-    bot.add _cog(game(bot))
+    bot.add_cog(game(bot))
