@@ -2,6 +2,19 @@ import discord
 from discord.ext import commands
 from game_logic.game_generate import generate_game
 
+class game_buttons(discord.ui.View):
+    def __init__(self, author):
+        self.author = author
+        super().__init__()
+
+    @discord.ui.Button(emoji='⏫', style=discord.ButtonStyle.green)
+    async def up_button(self, interaction: discord.Interaction):
+        if interaction.user.id == self.author:
+            await interaction.response.edit_messade(content='⏫', view=self)
+        else:
+            await interaction.response.send_messade(content='Вы не можете контактировать с чужими играми! '
+                                                            'Вызовите свою игру с помощью комманды!')
+
 class game(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -13,4 +26,4 @@ class game(commands.Cog):
         await ctx.respond(a)
 
 def setup(bot):
-    bot.add_cog(game(bot))
+    bot.add _cog(game(bot))
