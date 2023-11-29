@@ -29,6 +29,8 @@ except Exception as e:
     print(f"ERROR! Failed to read tokenfile: {e}")
     exit(1)
 
+client = pymongo.MongoClient(SETTINGS['mongo']['prefix']+SETTINGS['mongo']['host']+":"+SETTINGS['mongo']['port'])
+
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(SETTINGS['prefix']), intents=discord.Intents.all())
 
 @bot.event
@@ -92,7 +94,7 @@ async def reload_cogs(ctx):
     await ctx.respond(embed=embed, ephemeral=False)
 
 def main():
-    bot.dbclient = client = pymongo.MongoClient(SETTINGS['mongo']['prefix']+SETTINGS['mongo']['host']+":"+SETTINGS['mongo']['port'])
+    bot.dbclient = client
     
     for f in os.listdir("./cogs"):
         if not f.endswith(".py"): continue
