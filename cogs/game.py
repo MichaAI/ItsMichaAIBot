@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from game_logic.game_generate import generate_game
-#from game_logic.game_dbwork import game_get_from_db
+from game_logic.game_dbwork import game_get_from_db
 
 class game_buttons(discord.ui.View):
     def __init__(self, author):
