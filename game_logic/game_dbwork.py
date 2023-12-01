@@ -12,7 +12,7 @@ r = redis.StrictRedis(
 
 def game_get_from_db(player_id: int) -> Tuple[bool, Union[Dict, None]]:
     a = r.get(str(player_id) + ".game")
-    if not a is None:
+    if a is not None:
         a = json.load(a)
         return True, a
     else:
