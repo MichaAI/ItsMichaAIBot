@@ -1,7 +1,7 @@
 import redis
 import pymongo
 import json
-from typing import Union, Dict, Tuple
+from typing import Union, Dict, Tuple, Any, Awaitable
 from main import client
 
 r = redis.StrictRedis(
@@ -11,12 +11,35 @@ r = redis.StrictRedis(
 )
 
 def game_get_from_db(player_id: int) -> Tuple[bool, Union[Dict, None]]:
-    a = r.get(str(player_id) + ".game")
+    redis_player = str(player_id) + ".game"
+    a = r.get(redis_player)
     if a is not None:
         a = json.load(a)
+        r.expire(redis_player, 600)
         return True, a
     else:
-        a = client.game.player_data.find({'player_id': player_id})
-        return False, a
+        a = list(client.game.player_data.find({'player_id': player_id}))
+        if not a:
+            return False, None
+        else:
+            return False, a
 
 
+def insert_to_db(player_id: int, x: int, y: int, health: int, weapons: dict, artefacts: dict, to_mongo: bool = False):
+    a = {
+        "player_id": player_id,
+        "x": x,
+        "y": y,
+        "health": health,
+        "weapons": weapons,
+        "artefacts": artefacts
+    }
+
+    too_redis = json.dumps(a)
+
+    r.set(name=str(player_id) + ".game", value=too_redis, ex=600)
+
+    if to_mongo == True:
+        a = list(client.game.player_data.find({'player_id': player_id}))
+        if not a:
+            client.game.player_data.find({'player_id': player_id, {'$set': }}

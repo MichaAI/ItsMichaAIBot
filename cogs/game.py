@@ -25,8 +25,8 @@ class game(commands.Cog):
         cave_map = generate_game(seed=seed, x_offset=x, y_offset=y)
         a = '\n'.join([''.join(str(cell) for cell in row) for row in cave_map])
         await ctx.respond(a)
-        print(game_get_from_db(1))
+        print(game_get_from_db(ctx.author.id))
 
-        
+
 def setup(bot):
     bot.add_cog(game(bot))
