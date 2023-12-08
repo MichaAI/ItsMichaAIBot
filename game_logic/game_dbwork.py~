@@ -42,6 +42,4 @@ def insert_to_db(player_id: int, x: int, y: int, health: int, weapons: dict, art
     if to_mongo == True:
         a = list(client.game.player_data.find({'player_id': player_id}))
         if not a:
-            client.game.player_data.insert_one(a)
-        else:
-            client.game.player_data.update_one
+            ...
