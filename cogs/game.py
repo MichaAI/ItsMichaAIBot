@@ -2,7 +2,7 @@ import random
 import discord
 from discord.ext import commands
 from game_logic.game_generate import generate_game, find_start
-from game_logic.game_dbwork import game_get_from_db, insert_to_db, r
+from game_logic.game_dbwork import game_get_from_db, insert_to_db, redis_set_update
 
 
 class game_buttons(discord.ui.View):
@@ -41,7 +41,7 @@ class game(commands.Cog):
             a = '\n'.join([''.join(str(cell) for cell in row) for row in cave_map])
             view = game_buttons(ctx.author)
             await ctx.respond(a, view=view)
-
+            redis_set_update(ctx.author.id, game)
 
 
 
