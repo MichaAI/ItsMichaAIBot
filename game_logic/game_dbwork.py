@@ -51,3 +51,13 @@ def insert_to_db(player_id: int, seed=int,
             client.game.player_data.insert_one(a)
         else:
             client.game.player_data.update_one({'player_id': player_id}, {'$set': a})
+
+
+def redis_set_update(player_id: int, game_data):
+    game_data = json.dumps(game_data)
+    redis_player = str(player_id) + ".game"
+    a = r.get(redis_player)
+    if a is not None:
+        r.expire(redis_player, 600)
+    else:
+        r.set(redis_player, game_data, 600)
