@@ -12,7 +12,7 @@ def generate_game(seed, x_offset, y_offset):
     for x in range(width):
         for y in range(height):
             value = noise([(x + x_offset) * 0.2, (y + y_offset) * 0.2])
-            if value > threshold:
+            if value >= threshold:
                 cave_map[x][y] = "⬜"
             else:
                 cave_map[x][y] = "⬛"
@@ -22,6 +22,12 @@ def generate_game(seed, x_offset, y_offset):
     return cave_map
 
 
-cave_map = generate_game(23, 23, 23)
-a = '\n'.join([''.join(str(cell) for cell in row) for row in cave_map])
-print(a)
+def find_start(seed):
+    x = 0
+    noise = PerlinNoise(octaves=1, seed=seed)
+    value = noise([x * 0.2, 0])
+    while value >= threshold:
+        x += 1
+        value = noise([x * 0.2, 0])
+    print(x)
+    return x

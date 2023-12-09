@@ -26,9 +26,14 @@ def game_get_from_db(player_id: int) -> Tuple[bool, Union[Dict, None]]:
             return False, a
 
 
-def insert_to_db(player_id: int, x: int, y: int, health: int, weapons: dict, artefacts: dict, to_mongo: bool = False):
+def insert_to_db(player_id: int, seed=int,
+
+                 x: int = 0, y: int = 0, health: int = 3,
+                 weapons: dict = dict(), artefacts: dict = dict(),
+                 to_mongo: bool = False):
     a = {
         "player_id": player_id,
+        "seed": seed,
         "x": x,
         "y": y,
         "health": health,
