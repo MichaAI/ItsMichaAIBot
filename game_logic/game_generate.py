@@ -4,6 +4,7 @@ width = 13
 height = 13
 threshold = 0.035
 
+
 def generate_game(seed, x_offset, y_offset):
     cave_map = [[0 for _ in range(height)] for _ in range(width)]
     noise = PerlinNoise(octaves=1, seed=seed)
@@ -19,6 +20,7 @@ def generate_game(seed, x_offset, y_offset):
     cave_map[6][6] = ("🕵️‍♂️")
     # '\n'.join([''.join(str(cell) for cell in row) for row in cave_map])
     return cave_map
+
 
 cave_map = generate_game(23, 23, 23)
 a = '\n'.join([''.join(str(cell) for cell in row) for row in cave_map])

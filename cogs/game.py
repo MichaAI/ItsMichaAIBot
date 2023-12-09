@@ -3,6 +3,7 @@ from discord.ext import commands
 from game_logic.game_generate import generate_game
 from game_logic.game_dbwork import game_get_from_db
 
+
 class game_buttons(discord.ui.View):
     def __init__(self, author):
         self.author = author
@@ -15,7 +16,9 @@ class game_buttons(discord.ui.View):
             await interaction.response.edit_message(content=f'{r} and {g}')
         else:
             await interaction.response.send_message(content='Вы не можете контактировать с чужими играми! '
-                                                            'Вызовите свою игру с помощью комманды!')
+                                                            'Вызовите свою игру с помощью комманды!',
+                                                    ephemeral=True)
+
 
 class game(commands.Cog):
     def __init__(self, bot):

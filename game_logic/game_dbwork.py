@@ -10,6 +10,7 @@ r = redis.StrictRedis(
     db=0
 )
 
+
 def game_get_from_db(player_id: int) -> Tuple[bool, Union[Dict, None]]:
     redis_player = str(player_id) + ".game"
     a = r.get(redis_player)
@@ -39,9 +40,9 @@ def insert_to_db(player_id: int, x: int, y: int, health: int, weapons: dict, art
 
     r.set(name=str(player_id) + ".game", value=too_redis, ex=600)
 
-    if to_mongo == True:
+    if to_mongo:
         a = list(client.game.player_data.find({'player_id': player_id}))
         if not a:
             client.game.player_data.insert_one(a)
         else:
-            client.game.player_data.update_one
+            client.game.player_data.update_one({'player_id': player_id}, {'$set': a})

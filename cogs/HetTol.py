@@ -5,6 +5,8 @@ import socket
 import select
 
 # создаем класс cog
+
+
 class PingCog(commands.Cog):
     # инициализируем cog
     def __init__(self, bot):
@@ -19,7 +21,7 @@ class PingCog(commands.Cog):
         self.listen_ping.start()
 
     # создаем задачу для прослушивания пингов
-    @tasks.loop(seconds=1)
+    @tasks.loop(seconds=2)
     async def listen_ping(self):
         # проверяем, есть ли ожидающие соединения
         ready, _, _ = select.select([self.s], [], [], 0)
@@ -37,10 +39,11 @@ class PingCog(commands.Cog):
     # останавливаем задачу при выгрузке cog
     # закрываем сокет при выгрузке cog
     def cog_unload(self):
-            self.listen_ping.cancel()
-            self.s.close()
+        self.listen_ping.cancel()
+        self.s.close()
 
 # добавляем cog к боту
+
+
 def setup(bot):
     bot.add_cog(PingCog(bot))
-

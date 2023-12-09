@@ -4,9 +4,12 @@ from discord.ext import commands
 import pymongo
 import datetime
 
+
 def parse(s):
-    fmt=''.join('%'+c.upper()+c for c in 'hms' if c in s)
+
+    fmt = ''.join('%'+c.upper()+c for c in 'hms' if c in s)
     return datetime.datetime.strptime(s, fmt).time()
+
 
 class moderation(commands.Cog):
     def __init__(self, bot):
@@ -24,7 +27,7 @@ class moderation(commands.Cog):
 
             await asyncio.sleep((mute['start'] + mute['time']) - datetime.datetime.now().timestamp())
             await user.remove_roles(role)
-            
+
         for guild in bot.guilds:
             mutes = list(self.db_client.mutes.data.find({'guild_id': guild.id}))
             if len(mutes) == 0:
@@ -34,7 +37,6 @@ class moderation(commands.Cog):
             for mute in bot.mutes[guild.id]:
                 print(mute)
                 asyncio.create_task(_unmute_after(bot, mute, guild))
-                    
 
     def sync_db(self, target_guild_id):
         mutes = list(self.db_client.mutes.data.find({'guild_id': target_guild_id}))
@@ -42,11 +44,11 @@ class moderation(commands.Cog):
             self.db_client.mutes.data.insert_one({'guild_id': target_guild_id, 'data': []})
             mutes = self.db_client.mutes.data.find({'guild_id': target_guild_id})
         mutes = mutes[0]
-        self.db_client.mutes.data.update_one({'guild_id': target_guild_id}, {'$set': {'data': self.bot.mutes.get(target_guild_id, [])}})
+        self.db_client.mutes.data.update_one({'guild_id': target_guild_id},
+                                             {'$set': {'data': self.bot.mutes.get(target_guild_id, [])}})
 
     @commands.slash_command()
     async def set_mute_role(self, ctx, role: discord.Role):
-        #бекдоры
         if not ctx.author.guild_permissions.administrator:
             await ctx.respond(embed=discord.Embed(title="Недостаточно полномочий.",
                               description=f"Вам не хватает прав для исполнения команды.",
@@ -75,7 +77,7 @@ class moderation(commands.Cog):
                           color=discord.Color.from_rgb(0, 255, 0)))
 
     @commands.slash_command()
-    async def mute(self, ctx, user: discord.Member, mute_time: str="12h0m0s", reason: str="Не указана"):
+    async def mute(self, ctx, user: discord.Member, mute_time: str = "12h0m0s", reason: str = "Не указана"):
         if not (ctx.author.guild_permissions.mute_members or ctx.author.guild_permissions.administrator):
             await ctx.respond(embed=discord.Embed(title="Недостаточно полномочий",
                               description=f"Вам не хватает прав для исполнения команды.",
@@ -101,7 +103,7 @@ class moderation(commands.Cog):
         mute_seconds = None
         try:
             mute_seconds = parse(mute_time)
-        except:
+        except Exception as e:
             await ctx.respond(embed=discord.Embed(title="Неверный формат",
                               description=f"Формат времени неверен (XhYmZs - X часов Y минут Z секунд)",
                               color=discord.Color.from_rgb(255, 0, 0)))
@@ -110,7 +112,7 @@ class moderation(commands.Cog):
         try:
             role = discord.utils.get(ctx.guild.roles, id=mute_role_id)
             await user.add_roles(role)
-        except:
+        except Exception as e:
             await ctx.respond(embed=discord.Embed(title="Недостаточно прав",
                               description=f"У бота недостаточно прав для выдачи мьюта",
                               color=discord.Color.from_rgb(255, 0, 0)))
@@ -131,12 +133,10 @@ class moderation(commands.Cog):
         await user.remove_roles(role)
 
 
-
-
-
 def setup(bot):
     bot.add_cog(moderation(bot))
     print('[I] [Moderation] Cog loading!')
+
 
 def teardown(bot):
     print('[I] [Moderation] Cog unloading! Cleaning up...')
