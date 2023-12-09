@@ -48,5 +48,6 @@ class game(commands.Cog):
 
 
 def setup(bot):
-    print(sys.modules)
+    print(importlib.reload(sys.modules['game_logic.game_generate']))
+    
     bot.add_cog(game(bot))

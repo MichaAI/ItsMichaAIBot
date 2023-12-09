@@ -17,7 +17,7 @@ def generate_game(seed, x_offset, y_offset):
                 cave_map[x][y] = "⬛"
 
     cave_map[6][6] = ("🕵️‍♂️")
-    print('xfxfxdне работает')
+    print('xxfxdне работает')
     # '\n'.join([''.join(str(cell) for cell in row) for row in cave_map])
     return cave_map
 
