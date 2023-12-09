@@ -47,7 +47,7 @@ def insert_to_db(player_id: int, seed=int,
 
     if to_mongo:
         a = list(client.game.player_data.find({'player_id': player_id}))
-        if not a:
+        if a == []:
             client.game.player_data.insert_one(a)
         else:
             client.game.player_data.update_one({'player_id': player_id}, {'$set': a})
