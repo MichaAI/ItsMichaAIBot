@@ -41,7 +41,7 @@ class game(commands.Cog):
             a = '\n'.join([''.join(str(cell) for cell in row) for row in cave_map])
             view = game_buttons(ctx.author)
             await ctx.respond(a, view=view)
-            redis_set_update(ctx.author.id, game)
+            insert_to_db(**game)
 
 
 
