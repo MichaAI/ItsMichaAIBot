@@ -10,7 +10,7 @@ class game_buttons(discord.ui.View):
 
     @discord.ui.button(label='⏫', style=discord.ButtonStyle.green)
     async def up_button(self, button, interaction: discord.Interaction):
-        if interaction.user.id == self.author:
+        if interaction.user.id == self.author.id:
             r, g = game_get_from_db(interaction.user.id)
             await interaction.response.edit_message(content=f'{r} and {g}')
         else:
