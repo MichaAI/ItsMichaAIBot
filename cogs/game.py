@@ -2,7 +2,7 @@ import random
 import discord
 from discord.ext import commands
 from game_logic.game_generate import generate_game, find_start
-from game_logic.game_dbwork import game_get_from_db, insert_to_db, redis_set_update
+from game_logic.game_dbwork import game_get_from_db, insert_to_db
 import importlib
 import sys
 
