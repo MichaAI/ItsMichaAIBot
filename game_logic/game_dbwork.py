@@ -31,7 +31,7 @@ def insert_to_db(player_id: int, seed=int,
 
                  x: int = 0, y: int = 0, health: int = 3,
                  weapons: dict = dict(), artefacts: dict = dict(),
-                 to_mongo: bool = False):
+                 to_mongo: bool = False, **kwargs):
     a = {
         "player_id": player_id,
         "seed": seed,
