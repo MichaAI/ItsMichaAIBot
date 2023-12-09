@@ -15,7 +15,7 @@ def game_get_from_db(player_id: int) -> Tuple[bool, Union[Dict, None]]:
     redis_player = str(player_id) + ".game"
     a = r.get(redis_player)
     if a is not None:
-        a = json.load(a)
+        a = json.loads(a)
         r.expire(redis_player, 600)
         return True, a
     else:
