@@ -1,6 +1,7 @@
 import redis
 import pymongo
 import json
+import bson
 from typing import Union, Dict, Tuple, Any, Awaitable
 from main import client
 
@@ -46,8 +47,8 @@ def insert_to_db(player_id: int, seed=int,
     r.set(name=str(player_id) + ".game", value=too_redis, ex=600)
 
     if to_mongo:
-        a = list(client.game.player_data.find({'player_id': player_id}))
-        if a == []:
+        b = list(client.game.player_data.find({'player_id': player_id}))
+        if b == []:
             client.game.player_data.insert_one(a)
         else:
             client.game.player_data.update_one({'player_id': player_id}, {'$set': a})
