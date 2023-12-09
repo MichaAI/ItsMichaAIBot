@@ -20,7 +20,7 @@ def game_get_from_db(player_id: int) -> Tuple[bool, Union[Dict, None]]:
         r.expire(redis_player, 600)
         return True, a
     else:
-        a = list(client.game.player_data.find({'player_id': player_id}))
+        a = dict(client.game.player_data.find({'player_id': player_id}))
         if not a:
             return False, None
         else:
