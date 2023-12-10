@@ -1,10 +1,12 @@
 from perlin_noise import PerlinNoise
+import datetime
 width = 13
 height = 13
 threshold = 0.035
 
 
 def generate_game(seed, x_offset, y_offset):
+    now = datetime.datetime.now()
     cave_map = [[0 for _ in range(height)] for _ in range(width)]
     noise = PerlinNoise(octaves=1, seed=seed)
 
@@ -16,9 +18,9 @@ def generate_game(seed, x_offset, y_offset):
             else:
                 cave_map[x][y] = "⬛"
 
-    cave_map[6][6] = ("🕵️‍♂️")
-    print('xfxfxdне работает')
-    # '\n'.join([''.join(str(cell) for cell in row) for row in cave_map])
+    cave_map[6][6] = "🕵️‍♂️"
+    future = datetime.datetime.now()
+    print(f'{(future - now).microseconds} ms')
     return cave_map
 
 

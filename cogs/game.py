@@ -49,5 +49,9 @@ class game(commands.Cog):
 
 def setup(bot):
     print(importlib.reload(sys.modules['game_logic.game_generate']))
-    
     bot.add_cog(game(bot))
+
+
+def teardown(bot):
+    print('[I] [Game] Cog unloading! Cleaning up...')
+    print(importlib.reload(sys.modules['game_logic.game_generate']))
