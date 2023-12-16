@@ -30,7 +30,7 @@ class PingCog(commands.Cog):
             # принимаем соединение
             conn, addr = self.s.accept()
             # получаем данные
-            data = conn.recv(1024)
+            conn.recv(1024)
             # отправляем ответ "pong"
             conn.send(b"pong")
             # закрываем соединение

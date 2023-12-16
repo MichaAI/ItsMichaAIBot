@@ -7,7 +7,7 @@ import importlib
 import sys
 
 
-class game_buttons(discord.ui.View):
+class GameButtons(discord.ui.View):
     def __init__(self, author):
         self.author = author
         super().__init__()
@@ -41,17 +41,16 @@ class game(commands.Cog):
         else:
             cave_map = generate_game(seed=game_data['seed'], x_offset=game_data['x'], y_offset=game_data['y'])
             a = '\n'.join([''.join(str(cell) for cell in row) for row in cave_map])
-            view = game_buttons(ctx.author)
+            view = GameButtons(ctx.author)
             await ctx.respond(a, view=view)
             insert_to_db(**game_data)
 
 
-
 def setup(bot):
-    print(importlib.reload(sys.modules['game_logic.game_generate']))
     bot.add_cog(game(bot))
 
 
 def teardown(bot):
     print('[I] [Game] Cog unloading! Cleaning up...')
     print(importlib.reload(sys.modules['game_logic.game_generate']))
+    print(importlib.reload(sys.modules['game_logic.game_dbwork']))
