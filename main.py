@@ -4,6 +4,7 @@ import os
 import signal
 import atexit
 import pymongo
+from Custom_Help_Command import CustomHelpCommand
 
 SETTINGS = {
     'token': None,
@@ -101,6 +102,8 @@ async def reload_cogs(ctx):
 
 
 def main():
+    bot.help_command = CustomHelpCommand(
+        command_attrs={'name': "help", 'aliases': ["helpme", "помощь", "хелп"]})
     bot.dbclient = client
 
     for f in os.listdir("./cogs"):
