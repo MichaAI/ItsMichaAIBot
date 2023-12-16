@@ -1,4 +1,6 @@
 import discord
+from discord.ext import commands
+
 
 class CustomHelpCommand(commands.HelpCommand):
     def get_command_signature(self, command):
