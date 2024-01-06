@@ -43,7 +43,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if message.author.id == 891289716501119016
-        message.delete 
+        await message.delete() #если пытаешься бвть злым, пытайся лучше...
     if SETTINGS['log_messages']:
         print(f"Сервер: {message.guild.name} Канал: {message.channel.name} Автор:"
               f" {message.author.name} Сообщение: {message.content}")
