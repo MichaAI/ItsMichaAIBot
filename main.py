@@ -36,7 +36,7 @@ except Exception as e:
     print(f"ERROR! Failed to read tokenfile: {e}")
     exit(1)
 
-client = pymongo.MongoClient(SETTINGS['mongo']['prefix'] + SETTINGS['mongo']['login'] + ':' SETTINGS['mongo']['passwd'] + '@' + SETTINGS['mongo']['host'] + ":" + SETTINGS['mongo']['port'])
+client = pymongo.MongoClient(SETTINGS['mongo']['prefix'] + SETTINGS['mongo']['login'] + ':' + SETTINGS['mongo']['passwd'] + '@' + SETTINGS['mongo']['host'] + ":" + SETTINGS['mongo']['port'])
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(SETTINGS['prefix']), intents=discord.Intents.all())
 
