@@ -6,7 +6,7 @@ from typing import Union, Dict, Tuple, Any, Awaitable
 from main import client
 
 r = redis.StrictRedis(
-    host="localhost",
+    host="redis",
     port="6379",
     db=0
 )

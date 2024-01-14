@@ -20,7 +20,7 @@ SETTINGS = {
         'prefix': 'mongodb://',
         'login': '',
         'passwd': '',
-        'host': 'localhost',
+        'host': 'glitchdev.ru',
         'port': '27017',
     },
 }
