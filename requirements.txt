@@ -1,4 +1,4 @@
-pymongo~=4.6.0
+pymongo~=4.6.1
 redis~=5.0.1
-pycord~=2.4.1
 perlin_noise~=1.12
+py-cord~=2.4.1 
