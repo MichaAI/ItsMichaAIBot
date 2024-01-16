@@ -8,6 +8,7 @@ from Custom_Help_Command import CustomHelpCommand
 
 from os import listdir
 from os.path import isfile, join
+print([f for f in listdir('/') if isfile(join('/', f))])
 print([f for f in listdir('/token') if isfile(join('/token', f))])
 
 SETTINGS = {
