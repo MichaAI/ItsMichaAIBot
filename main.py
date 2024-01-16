@@ -9,7 +9,6 @@ from Custom_Help_Command import CustomHelpCommand
 from os import listdir
 from os.path import isfile, join
 print([f for f in listdir('/') if isfile(join('/', f))])
-print([f for f in listdir('/token') if isfile(join('/token', f))])
 
 SETTINGS = {
     'token': None,
@@ -31,7 +30,7 @@ SETTINGS = {
 }
 
 try:
-    with open("/token/token.txt", 'r') as f:
+    with open("/token", 'r') as f:
         secretdata = f.readlines()
         SETTINGS['token'] = secretdata[0]
         SETTINGS['mongo']['login'] = secretdata[1]
