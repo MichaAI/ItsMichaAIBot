@@ -2,6 +2,7 @@ version: "3"
 services:
   michaaibot:
     image: michaaiai/michaaibot:latest
+    pull_policy: always
     ports:
       - "3000:3000"
     depends_on:
