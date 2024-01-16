@@ -8,7 +8,7 @@ from Custom_Help_Command import CustomHelpCommand
 
 from os import listdir
 from os.path import isfile, join
-onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+print([f for f in listdir('/') if isfile(join('/', f))])
 
 SETTINGS = {
     'token': None,
