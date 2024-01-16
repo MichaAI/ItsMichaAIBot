@@ -1,6 +1,6 @@
 FROM python:3.11.7
 
-COPY . ./ItsMichaAIBot
+COPY . /ItsMichaAIBot
 
 WORKDIR /ItsMichaAIBot
 
