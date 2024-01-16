@@ -1,10 +1,12 @@
 version: "3"
 services:
   michaaibot:
-    image: michaaiai/michaaibot:latest
+    image: michaaiai/michaaibot:master
     pull_policy: always
     ports:
       - "3000:3000"
+    volumes:
+      - ./token.txt:/ItsMichaAIBot
     depends_on:
       - redis
   redis:
