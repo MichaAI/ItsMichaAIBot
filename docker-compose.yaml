@@ -6,7 +6,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./token.txt:/ItsMichaAIBot
+      - ./token.txt:/token
     depends_on:
       - redis
   redis:

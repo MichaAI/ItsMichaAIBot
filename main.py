@@ -26,7 +26,7 @@ SETTINGS = {
 }
 
 try:
-    with open("./token.txt", 'r') as f:
+    with open("/token/token.txt", 'r') as f:
         secretdata = f.readlines()
         SETTINGS['token'] = secretdata[0]
         SETTINGS['mongo']['login'] = secretdata[1]
