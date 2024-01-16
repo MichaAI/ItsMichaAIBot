@@ -6,6 +6,10 @@ import atexit
 import pymongo
 from Custom_Help_Command import CustomHelpCommand
 
+from os import listdir
+from os.path import isfile, join
+onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+
 SETTINGS = {
     'token': None,
     'bot': 'Its MichaAIs bot',  # нигде не используются??
