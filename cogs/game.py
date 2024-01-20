@@ -12,15 +12,17 @@ class GameButtons(discord.ui.View):
         self.author = author
         super().__init__()
 
-    @discord.ui.button(label='⏫', style=discord.ButtonStyle.green)
+    @discord.ui.button(label="⏫", style=discord.ButtonStyle.green)
     async def up_button(self, button, interaction: discord.Interaction):
         if interaction.user.id == self.author.id:
             r, g = game_get_from_db(interaction.user.id)
-            await interaction.response.edit_message(content=f'{r} and {g}')
+            await interaction.response.edit_message(content=f"{r} and {g}")
         else:
-            await interaction.response.send_message(content='Вы не можете контактировать с чужими играми! '
-                                                            'Вызовите свою игру с помощью комманды!',
-                                                    ephemeral=True)
+            await interaction.response.send_message(
+                content="Вы не можете контактировать с чужими играми! "
+                "Вызовите свою игру с помощью комманды!",
+                ephemeral=True,
+            )
 
 
 class game(commands.Cog):
@@ -32,15 +34,20 @@ class game(commands.Cog):
         redis, game_data = game_get_from_db(ctx.author.id)
 
         if game_data is None:
-            await ctx.respond(f'Добро пожаловать, {ctx.author.mention}, вставте сюда обучение нахуй,'
-                              f' используйте комманду еще раз что бы начать игру')
-            seed = random.randint(0, 24009090900)  # ваще хз че сюда можно вставить кроме этого
+            await ctx.respond(
+                f"Добро пожаловать, {ctx.author.mention}, вставте сюда обучение нахуй,"
+                f" используйте комманду еще раз что бы начать игру"
+            )
+            # ваще хз че сюда можно вставить кроме этого
+            seed = random.randint(0, 24009090900)
             x = find_start(seed)
             insert_to_db(ctx.author.id, seed, x, to_mongo=True)
             return
         else:
-            cave_map = generate_game(seed=game_data['seed'], x_offset=game_data['x'], y_offset=game_data['y'])
-            a = '\n'.join([''.join(str(cell) for cell in row) for row in cave_map])
+            cave_map = generate_game(
+                seed=game_data["seed"], x_offset=game_data["x"], y_offset=game_data["y"]
+            )
+            a = "\n".join(["".join(str(cell) for cell in row) for row in cave_map])
             view = GameButtons(ctx.author)
             await ctx.respond(a, view=view)
             insert_to_db(**game_data)
@@ -51,6 +58,6 @@ def setup(bot):
 
 
 def teardown(bot):
-    print('[I] [Game] Cog unloading! Cleaning up...')
-    print(importlib.reload(sys.modules['game_logic.game_generate']))
-    print(importlib.reload(sys.modules['game_logic.game_dbwork']))
+    print("[I] [Game] Cog unloading! Cleaning up...")
+    print(importlib.reload(sys.modules["game_logic.game_generate"]))
+    print(importlib.reload(sys.modules["game_logic.game_dbwork"]))

@@ -11,11 +11,14 @@ class voice(commands.Cog):
         if before.channel == after.channel:
             return  # скрипт закончится если канал не изменился
         # здесь должно быть обращение к бд
-        if after.channel is not None:  # здесь нужно сделать что бы если канал есть в бд код не исполнялся
+        if (
+            after.channel is not None
+        ):  # здесь нужно сделать что бы если канал есть в бд код не исполнялся
             role_name = after.channel.name
             role = discord.utils.get(member.guild.roles, name=role_name)
             if role is None:  # если роли нету на сервере
-                await member.guild.create_role(name=role_name, mentionable=True)  # coздаем ее
+                # coздаем ее
+                await member.guild.create_role(name=role_name, mentionable=True)
             await member.add_roles(role)  # добавляем роль пользователю
         if before.channel is not None:
             role_name = before.channel.name
@@ -28,7 +31,8 @@ class voice(commands.Cog):
     async def ignore_voice_channel(self, ctx, role: discord.VoiceChannel):
         await ctx.respond(
             "здесь нужно <@891289716501119016> сделать что бы указанный"
-            " канал не создавал роли для упоминания учасников этого канала")
+            " канал не создавал роли для упоминания учасников этого канала"
+        )
 
 
 def setup(bot):

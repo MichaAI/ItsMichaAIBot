@@ -8,63 +8,91 @@ from Custom_Help_Command import CustomHelpCommand
 
 from os import listdir
 from os.path import isfile, join
-print([f for f in listdir('/') if isfile(join('/', f))])
+
+print([f for f in listdir("/") if isfile(join("/", f))])
 
 SETTINGS = {
-    'token': None,
-    'bot': 'Its MichaAIs bot',  # нигде не используются??
-    'id': 1147250594776612948,
-    'prefix': '*',
-
-    'log_messages': False,
-    'owner_id': 629999906429337600,
-    'persona_prefix': "Mb:",
-
-    'mongo': {
-        'prefix': 'mongodb://',
-        'login': '',
-        'passwd': '',
-        'host': 'glitchdev.ru',
-        'port': '27017',
+    "token": None,
+    "bot": "Its MichaAIs bot",  # нигде не используются??
+    "id": 1147250594776612948,
+    "prefix": "*",
+    "log_messages": False,
+    "owner_id": 629999906429337600,
+    "persona_prefix": "Mb:",
+    "mongo": {
+        "prefix": "mongodb://",
+        "login": "",
+        "passwd": "",
+        "host": "glitchdev.ru",
+        "port": "27017",
     },
 }
 
 try:
-    with open("/token", 'r') as f:
+    with open("/token", "r") as f:
         secretdata = f.readlines()
-        SETTINGS['token'] = secretdata[0]
-        SETTINGS['mongo']['login'] = secretdata[1]
-        SETTINGS['mongo']['passwd'] = secretdata[2]
+        SETTINGS["token"] = secretdata[0]
+        SETTINGS["mongo"]["login"] = secretdata[1]
+        SETTINGS["mongo"]["passwd"] = secretdata[2]
         del secretdata
 except Exception as e:
     print(f"ERROR! Failed to read tokenfile: {e}")
     exit(1)
-print(SETTINGS['mongo']['prefix'] + SETTINGS['mongo']['login'][:-2] + ':' + SETTINGS['mongo']['passwd'][:-2] + '@' + SETTINGS['mongo']['host'] + ":" + SETTINGS['mongo']['port'])
-client = pymongo.MongoClient(SETTINGS['mongo']['prefix'] + SETTINGS['mongo']['login'][:-1] + ':' + SETTINGS['mongo']['passwd'][:-1] + '@' + SETTINGS['mongo']['host'] + ":" + SETTINGS['mongo']['port']+'/admin')
+print(
+    SETTINGS["mongo"]["prefix"]
+    + SETTINGS["mongo"]["login"][:-2]
+    + ":"
+    + SETTINGS["mongo"]["passwd"][:-2]
+    + "@"
+    + SETTINGS["mongo"]["host"]
+    + ":"
+    + SETTINGS["mongo"]["port"]
+)
+client = pymongo.MongoClient(
+    SETTINGS["mongo"]["prefix"]
+    + SETTINGS["mongo"]["login"][:-1]
+    + ":"
+    + SETTINGS["mongo"]["passwd"][:-1]
+    + "@"
+    + SETTINGS["mongo"]["host"]
+    + ":"
+    + SETTINGS["mongo"]["port"]
+    + "/admin"
+)
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(SETTINGS['prefix']), intents=discord.Intents.all())
+bot = commands.Bot(
+    command_prefix=commands.when_mentioned_or(SETTINGS["prefix"]),
+    intents=discord.Intents.all(),
+)
 
 
 @bot.event
 async def on_ready():
-    print('bot ready')
+    print("bot ready")
 
 
 @bot.event
 async def on_message(message):
-    #if message.author.id == 891289716501119016:
+    # if message.author.id == 891289716501119016:
     #    await message.delete() #если пытаешься бвть злым, пытайся лучше...
-    if SETTINGS['log_messages']:
-        print(f"Сервер: {message.guild.name} Канал: {message.channel.name} Автор:"
-              f" {message.author.name} Сообщение: {message.content}")
+    if SETTINGS["log_messages"]:
+        print(
+            f"Сервер: {message.guild.name} Канал: {message.channel.name} Автор:"
+            f" {message.author.name} Сообщение: {message.content}"
+        )
     if message.author == bot.user:
         return
 
     await bot.process_commands(message)
 
-    if message.content.startswith(SETTINGS['persona_prefix']) and message.author.id == SETTINGS['owner_id']:
-        await message.channel.send(message.content[len(SETTINGS['persona_prefix']):],
-                                   reference=(message.reference or None))
+    if (
+        message.content.startswith(SETTINGS["persona_prefix"])
+        and message.author.id == SETTINGS["owner_id"]
+    ):
+        await message.channel.send(
+            message.content[len(SETTINGS["persona_prefix"]) :],
+            reference=(message.reference or None),
+        )
         await message.delete()
 
 
@@ -82,7 +110,11 @@ async def reload_cogs(ctx):
             try:
                 bot.unload_extension(f"cogs.{f[:-3]}")
                 bot.load_extension(f"cogs.{f[:-3]}")
-                embed.add_field(name=f"cog {f[:-3]} (OK)", value="Successfully reloaded", inline=False)
+                embed.add_field(
+                    name=f"cog {f[:-3]} (OK)",
+                    value="Successfully reloaded",
+                    inline=False,
+                )
                 print(f"[I] Cog {f[:-3]} reloaded")
             except Exception as e:
                 load_err += 1
@@ -93,7 +125,9 @@ async def reload_cogs(ctx):
         else:
             try:
                 bot.load_extension(f"cogs.{f[:-3]}")
-                embed.add_field(name=f"cog {f[:-3]} (OK)", value="Successfully loaded", inline=False)
+                embed.add_field(
+                    name=f"cog {f[:-3]} (OK)", value="Successfully loaded", inline=False
+                )
                 print(f"[I] Cog {f[:-3]} loaded")
             except Exception as e:
                 load_err += 1
@@ -105,17 +139,22 @@ async def reload_cogs(ctx):
     if load_suc == load_suc + load_err:
         embed.set_footer(text=f"All cogs ({load_suc}) were reloaded successfully")
     elif load_err == load_suc + load_err:
-        embed.set_footer(text=f"ERROR!!! All cogs ({load_err}) was failed to reload! Call gary!!!")
+        embed.set_footer(
+            text=f"ERROR!!! All cogs ({load_err}) was failed to reload! Call gary!!!"
+        )
     else:
-        embed.set_footer(text=f"Cogs (re)loaded: {load_suc}/{load_suc + load_err} "
-                              f"| Cogs errored: {load_err}/{load_suc + load_err}")
+        embed.set_footer(
+            text=f"Cogs (re)loaded: {load_suc}/{load_suc + load_err} "
+            f"| Cogs errored: {load_err}/{load_suc + load_err}"
+        )
 
     await ctx.respond(embed=embed, ephemeral=False)
 
 
 def main():
     bot.help_command = CustomHelpCommand(
-        command_attrs={'name': "help", 'aliases': ["helpme", "помощь", "хелп"]})
+        command_attrs={"name": "help", "aliases": ["helpme", "помощь", "хелп"]}
+    )
     bot.dbclient = client
 
     for f in os.listdir("./cogs"):
@@ -127,7 +166,7 @@ def main():
         except Exception as e:
             print(f"[E] ERROR! Cog {f[:-3]} loading failed: {e}")
 
-    bot.run(SETTINGS['token'])
+    bot.run(SETTINGS["token"])
     handle_exit()
 
 

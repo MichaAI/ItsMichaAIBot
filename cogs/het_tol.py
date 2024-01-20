@@ -11,7 +11,6 @@ class PingCog(commands.Cog):
         self.s.listen()
         self.listen_ping.start()
 
-
     @tasks.loop(seconds=2)
     async def listen_ping(self):
         ready, _, _ = select.select([self.s], [], [], 0)
@@ -20,7 +19,6 @@ class PingCog(commands.Cog):
             conn.recv(1024)
             conn.send(b"pong")
             conn.close()
-
 
     def cog_unload(self):
         self.listen_ping.cancel()

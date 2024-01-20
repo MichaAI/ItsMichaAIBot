@@ -42,6 +42,7 @@ class PingCog(commands.Cog):
         self.listen_ping.cancel()
         self.s.close()
 
+
 # добавляем cog к боту
 
 
