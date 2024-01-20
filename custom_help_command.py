@@ -15,10 +15,10 @@ class CustomHelpCommand(commands.HelpCommand):
                 if isinstance(c, discord.ext.commands.Command):
                     if c.aliases:
                         command_signatures.append(
-                            f"`{self.context.clean_prefix}{c.qualified_name}` {c.signature}")
+                            f"`{self.context.clean_prefix}{c.qualified_name}` '
+                            ''{c.signature}")
                     else:
-                        command_signatures.append(f"`{self.context.clean_prefix}
-                                                  {c.qualified_name}`")
+                        command_signatures.append(f"`{self.context.clean_prefix} {c.qualified_name}`")
             if command_signatures:
                 cog_name = getattr(cog, "qualified_name", None)
                 if cog_name:
