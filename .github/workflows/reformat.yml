@@ -1,4 +1,4 @@
-name Reformat code
+name: Reformat code
 
 on: 
   push
