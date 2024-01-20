@@ -4,7 +4,7 @@ import os
 import signal
 import atexit
 import pymongo
-from Custom_Help_Command import CustomHelpCommand
+from custom_help_command import CustomHelpCommand
 
 from os import listdir
 from os.path import isfile, join
