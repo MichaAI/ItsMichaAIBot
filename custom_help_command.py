@@ -16,7 +16,7 @@ class CustomHelpCommand(commands.HelpCommand):
                     if c.aliases:
                         command_signatures.append(
                             f"`{self.context.clean_prefix}{c.qualified_name}` '
-                            ''{c.signature}")
+                            '{c.signature}")
                     else:
                         command_signatures.append(f"`{self.context.clean_prefix} {c.qualified_name}`")
             if command_signatures:
