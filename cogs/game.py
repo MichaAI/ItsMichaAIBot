@@ -1,10 +1,10 @@
 import random
 import discord
+import importlib
+import sys
 from discord.ext import commands
 from game_logic.game_generate import generate_game, find_start
 from game_logic.game_dbwork import game_get_from_db, insert_to_db
-import importlib
-import sys
 
 
 class GameButtons(discord.ui.View):
@@ -25,13 +25,13 @@ class GameButtons(discord.ui.View):
             )
 
 
-class game(commands.Cog):
+class Game(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.slash_command()
     async def game_test(self, ctx):
-        redis, game_data = game_get_from_db(ctx.author.id)
+        _, game_data = game_get_from_db(ctx.author.id)
 
         if game_data is None:
             await ctx.respond(
@@ -42,7 +42,6 @@ class game(commands.Cog):
             seed = random.randint(0, 24009090900)
             x = find_start(seed)
             insert_to_db(ctx.author.id, seed, x, to_mongo=True)
-            return
         else:
             cave_map = generate_game(
                 seed=game_data["seed"], x_offset=game_data["x"], y_offset=game_data["y"]
@@ -54,10 +53,12 @@ class game(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(game(bot))
+    bot.add_cog(Game(bot))
 
-
+# pylint: disable=unused-argument
 def teardown(bot):
     print("[I] [Game] Cog unloading! Cleaning up...")
     print(importlib.reload(sys.modules["game_logic.game_generate"]))
     print(importlib.reload(sys.modules["game_logic.game_dbwork"]))
+# pylint: enable=unused-argument
+

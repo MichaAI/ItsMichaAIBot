@@ -1,16 +1,14 @@
-import discord
 import asyncio
-from discord.ext import commands
-import pymongo
 import datetime
-
+import discord
+from discord.ext import commands
 
 def parse(s):
     fmt = "".join("%" + c.upper() + c for c in "hms" if c in s)
     return datetime.datetime.strptime(s, fmt).time()
 
 
-class moderation(commands.Cog):
+class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.bot.mutes = {}
@@ -58,7 +56,7 @@ class moderation(commands.Cog):
             await ctx.respond(
                 embed=discord.Embed(
                     title="Недостаточно полномочий.",
-                    description=f"Вам не хватает прав для исполнения команды.",
+                    description="Вам не хватает прав для исполнения команды.",
                     color=discord.Color.from_rgb(255, 0, 0),
                 )
             )
@@ -76,7 +74,7 @@ class moderation(commands.Cog):
             await ctx.respond(
                 embed=discord.Embed(
                     title="Равное значение.",
-                    description=f"Установленная роль мьюта равна данной.",
+                    description="Установленная роль мьюта равна данной.",
                     color=discord.Color.from_rgb(255, 0, 0),
                 )
             )
@@ -87,7 +85,7 @@ class moderation(commands.Cog):
         await ctx.respond(
             embed=discord.Embed(
                 title="Успех!",
-                description=f"Роль мьюта установлена.",
+                description="Роль мьюта установлена.",
                 color=discord.Color.from_rgb(0, 255, 0),
             )
         )
@@ -107,7 +105,7 @@ class moderation(commands.Cog):
             await ctx.respond(
                 embed=discord.Embed(
                     title="Недостаточно полномочий",
-                    description=f"Вам не хватает прав для исполнения команды.",
+                    description="Вам не хватает прав для исполнения команды.",
                     color=discord.Color.from_rgb(255, 0, 0),
                 )
             )
@@ -125,7 +123,7 @@ class moderation(commands.Cog):
             await ctx.respond(
                 embed=discord.Embed(
                     title="Неверная конфигурация",
-                    description=f"Роль мьюта не установлена.",
+                    description="Роль мьюта не установлена.",
                     color=discord.Color.from_rgb(255, 0, 0),
                 )
             )
@@ -133,11 +131,12 @@ class moderation(commands.Cog):
         mute_seconds = None
         try:
             mute_seconds = parse(mute_time)
-        except Exception as e:
+        # pylint: disable=broad-exception-caught
+        except Exception:
             await ctx.respond(
                 embed=discord.Embed(
                     title="Неверный формат",
-                    description=f"Формат времени неверен (XhYmZs - X часов Y минут Z секунд)",
+                    description="Формат времени неверен (XhYmZs - X часов Y минут Z секунд)",
                     color=discord.Color.from_rgb(255, 0, 0),
                 )
             )
@@ -146,14 +145,15 @@ class moderation(commands.Cog):
         try:
             role = discord.utils.get(ctx.guild.roles, id=mute_role_id)
             await user.add_roles(role)
-        except Exception as e:
+        except Exception:
             await ctx.respond(
                 embed=discord.Embed(
                     title="Недостаточно прав",
-                    description=f"У бота недостаточно прав для выдачи мьюта",
+                    description="У бота недостаточно прав для выдачи мьюта",
                     color=discord.Color.from_rgb(255, 0, 0),
                 )
             )
+        # pylint: enable=broad-exception-caught`
             return
         mutes.append(
             {
@@ -171,7 +171,8 @@ class moderation(commands.Cog):
         await ctx.respond(
             embed=discord.Embed(
                 title="Успех!",
-                description=f"{user.mention} был успешно замьючен на {mute_time} по причине {reason}",
+                description=f"{user.mention} был успешно замьючен на "
+                            f"{mute_time} по причине {reason}",
                 color=discord.Color.from_rgb(0, 255, 0),
             )
         )
@@ -180,11 +181,12 @@ class moderation(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(moderation(bot))
+    bot.add_cog(Moderation(bot))
     print("[I] [Moderation] Cog loading!")
 
-
+# pylint: disable=unused-argument
 def teardown(bot):
     print("[I] [Moderation] Cog unloading! Cleaning up...")
     for guild in bot.guilds:
         bot.moderation_cog.sync_db(guild)
+# pylint: disable=unused-argument
