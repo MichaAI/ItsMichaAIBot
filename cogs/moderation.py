@@ -3,6 +3,7 @@ import datetime
 import discord
 from discord.ext import commands
 
+
 def parse(s):
     fmt = "".join("%" + c.upper() + c for c in "hms" if c in s)
     return datetime.datetime.strptime(s, fmt).time()
@@ -153,7 +154,7 @@ class Moderation(commands.Cog):
                     color=discord.Color.from_rgb(255, 0, 0),
                 )
             )
-        # pylint: enable=broad-exception-caught`
+            # pylint: enable=broad-exception-caught`
             return
         mutes.append(
             {
@@ -172,7 +173,7 @@ class Moderation(commands.Cog):
             embed=discord.Embed(
                 title="Успех!",
                 description=f"{user.mention} был успешно замьючен на "
-                            f"{mute_time} по причине {reason}",
+                f"{mute_time} по причине {reason}",
                 color=discord.Color.from_rgb(0, 255, 0),
             )
         )
@@ -184,9 +185,14 @@ def setup(bot):
     bot.add_cog(Moderation(bot))
     print("[I] [Moderation] Cog loading!")
 
+
 # pylint: disable=unused-argument
+
+
 def teardown(bot):
     print("[I] [Moderation] Cog unloading! Cleaning up...")
     for guild in bot.guilds:
         bot.moderation_cog.sync_db(guild)
+
+
 # pylint: disable=unused-argument
