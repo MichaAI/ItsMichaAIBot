@@ -20,8 +20,14 @@ class StarRemove(commands.Cog):
                 continue
             should_clear = True
             for user in reaction.users():
-                if user.id not in [629999906429337600, 609348530498437140, 639066140957736971]: should_clear = False
-            if not should_clear: continue
+                if user.id not in [
+                    629999906429337600,
+                    609348530498437140,
+                    639066140957736971,
+                ]:
+                    should_clear = False
+            if not should_clear:
+                continue
             await reaction.clear()
 
 
