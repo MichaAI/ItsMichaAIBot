@@ -57,9 +57,12 @@ def setup(bot):
 
 
 # pylint: disable=unused-argument
+
+
 def teardown(bot):
     print("[I] [Game] Cog unloading! Cleaning up...")
     print(importlib.reload(sys.modules["game_logic.game_generate"]))
     print(importlib.reload(sys.modules["game_logic.game_dbwork"]))
-# pylint: enable=unused-argument
 
+
+# pylint: enable=unused-argument
