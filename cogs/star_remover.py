@@ -16,7 +16,7 @@ class StarRemove(commands.Cog):
         )
 
         for reaction in message.reactions:
-            if reacion.emoji != "⭐":
+            if reaction.emoji != "⭐":
                 continue
             await reaction.clear()
 
