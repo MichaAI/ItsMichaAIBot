@@ -16,7 +16,7 @@ class StarRemove(commands.Cog):
         message = await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
 
         for reaction in message.reactions:
-            print(reaction, message.reactions)
+            if reacion.emoji != "⭐": continue
             await reaction.clear()
 
 def setup(bot):
