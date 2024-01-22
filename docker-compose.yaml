@@ -6,7 +6,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./token.txt:/token
+      - ./token.txt:/token.txt
     depends_on:
       - redis
   redis:

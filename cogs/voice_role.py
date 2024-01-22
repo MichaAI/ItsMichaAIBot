@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 
 
-class voice(commands.Cog):
+class Voice(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -28,7 +28,7 @@ class voice(commands.Cog):
             await member.remove_roles(role)
 
     @commands.slash_command()
-    async def ignore_voice_channel(self, ctx, role: discord.VoiceChannel):
+    async def ignore_voice_channel(self, ctx):
         await ctx.respond(
             "здесь нужно <@891289716501119016> сделать что бы указанный"
             " канал не создавал роли для упоминания учасников этого канала"
@@ -36,4 +36,4 @@ class voice(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(voice(bot))
+    bot.add_cog(Voice(bot))

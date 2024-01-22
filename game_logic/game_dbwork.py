@@ -1,7 +1,5 @@
 import redis
-import pymongo
 import json
-import bson
 from typing import Union, Dict, Tuple, Any, Awaitable
 from main import client
 
@@ -15,12 +13,10 @@ def game_get_from_db(player_id: int) -> Tuple[bool, Union[Dict, None]]:
         a = json.loads(a)
         r.expire(redis_player, 600)
         return True, a
-    else:
-        a = dict(client.game.player_data.find_one({"player_id": player_id}))
-        if not a:
-            return False, None
-        else:
-            return False, a
+    a = dict(client.game.player_data.find_one({"player_id": player_id}))
+    if not a:
+        return False, None
+    return False, a
 
 
 def insert_to_db(
@@ -29,8 +25,8 @@ def insert_to_db(
     x: int = 0,
     y: int = 0,
     health: int = 3,
-    weapons: dict = dict(),
-    artefacts: dict = dict(),
+    weapons: dict = {},
+    artefacts: dict = {}, 
     to_mongo: bool = False,
     **kwargs
 ):

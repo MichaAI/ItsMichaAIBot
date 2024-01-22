@@ -1,8 +1,8 @@
 import random
-import discord
 import importlib
 import sys
 from discord.ext import commands
+import discord
 from game_logic.game_generate import generate_game, find_start
 from game_logic.game_dbwork import game_get_from_db, insert_to_db
 
@@ -54,6 +54,7 @@ class Game(commands.Cog):
 
 def setup(bot):
     bot.add_cog(Game(bot))
+
 
 # pylint: disable=unused-argument
 def teardown(bot):

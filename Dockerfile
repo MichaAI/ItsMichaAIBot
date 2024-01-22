@@ -1,8 +1,6 @@
 FROM python:3.11.7
 
-COPY . /ItsMichaAIBot
-
-WORKDIR /ItsMichaAIBot
+COPY . .
 
 RUN python3 -m pip install -r requirements.txt
 

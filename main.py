@@ -6,10 +6,6 @@ import atexit
 import pymongo
 from custom_help_command import CustomHelpCommand
 
-from os import listdir
-from os.path import isfile, join
-
-print([f for f in listdir("/") if isfile(join("/", f))])
 
 SETTINGS = {
     "token": None,
@@ -29,7 +25,7 @@ SETTINGS = {
 }
 
 try:
-    with open("/token", "r") as f:
+    with open("./token.txt", "r") as f:
         secretdata = f.readlines()
         SETTINGS["token"] = secretdata[0]
         SETTINGS["mongo"]["login"] = secretdata[1]
