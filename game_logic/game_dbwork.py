@@ -26,7 +26,7 @@ def insert_to_db(
     y: int = 0,
     health: int = 3,
     weapons: dict = {},
-    artefacts: dict = {}, 
+    artefacts: dict = {},
     to_mongo: bool = False,
     **kwargs
 ):
