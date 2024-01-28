@@ -18,17 +18,6 @@ class StarRemove(commands.Cog):
         for reaction in message.reactions:
             if reaction.emoji != "⭐":
                 continue
-            should_clear = True
-            async for user in reaction.users():
-                if user.id not in [
-                    629999906429337600,
-                    609348530498437140,
-                    639066140957736971,
-                ]:
-                    should_clear = False
-                    break
-            if not should_clear:
-                continue
             await reaction.clear()
 
 
