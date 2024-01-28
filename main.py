@@ -1,11 +1,14 @@
 import discord
 from discord.ext import commands
+import asyncio
 import os
 import signal
 import atexit
 import pymongo
 from custom_help_command import CustomHelpCommand
 
+import uvloop
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 SETTINGS = {
     "token": None,

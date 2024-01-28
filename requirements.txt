@@ -1,4 +1,5 @@
-pymongo~=4.6.1
-redis~=5.0.1
-perlin_noise~=1.12
-py-cord~=2.4.1 
+pymongo
+redis
+perlin_noise
+py-cord
+uvloop
