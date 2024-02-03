@@ -8,6 +8,7 @@ import pymongo
 from custom_help_command import CustomHelpCommand
 
 import uvloop
+
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 SETTINGS = {
