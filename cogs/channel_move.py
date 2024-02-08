@@ -33,7 +33,7 @@ class ChannelMove(commands.Cog):
         await ctx.respond(
             f"Позиция канала {channel.mention} "
             f"успешно изменена на {abs(move_to)} каналов"
-            '{"вверх" if move_to>0 else "вниз"}'
+            f'{"вверх" if move_to>0 else "вниз"}'
         )
 
 
