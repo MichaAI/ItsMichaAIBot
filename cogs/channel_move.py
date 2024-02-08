@@ -36,11 +36,11 @@ class ChannelMove(commands.Cog):
         # )
         channel_name = (
             "канал"
-            if move % 10 == 1
+            if move_to % 10 == 1
             else (
                 "канала"
-                if move % 10 in (2, 3, 4)
-                else "каналов" if move % 10 == 0 else "Пофиксить! Зовите Гэри!!"
+                if move_to % 10 in (2, 3, 4)
+                else "каналов" if move_to % 10 == 0 else "Пофиксить! Зовите Гэри!!"
             )
         )
         await channel.edit(position=channel.position - move_to)
