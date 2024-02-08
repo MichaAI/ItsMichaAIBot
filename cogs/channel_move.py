@@ -34,12 +34,17 @@ class ChannelMove(commands.Cog):
         #    if channel_pos.endswith("1")
         #    else "каналов" if channel_pos[-2:] not in ["12", "13", "14"] else "канала"
         # )
-        channel_name = (                                                         "канал"
+        channel_name = (
+            "канал"
             if move_to == 1 or (move_to > 11 and move_to % 10 == 1)
             else (
                 "канала"
                 if move_to % 10 in (2, 3, 4) and not move_to in (11, 12, 13, 14)
-                else "каналов" if move_to in (11, 12, 13, 14) or move_to % 10 in (0, 5, 6, 7, 8, 9) else "Пофиксить! Зовите Гэри!!"
+                else (
+                    "каналов"
+                    if move_to in (11, 12, 13, 14) or move_to % 10 in (0, 5, 6, 7, 8, 9)
+                    else "Пофиксить! Зовите Гэри!!"
+                )
             )
         )
         await channel.edit(position=channel.position - move_to)
