@@ -29,7 +29,11 @@ class ChannelMove(commands.Cog):
         ):
             return await ctx.respond("Недостаточно полномочий.")
         channel_pos = str(move_to)
-        channel_name = "канал" if channel_pos.endswith("1") else "каналов" if channel_pos[-2:] not in ["12", "13", "14"] else "канала"
+        channel_name = (
+            "канал"
+            if channel_pos.endswith("1")
+            else "каналов" if channel_pos[-2:] not in ["12", "13", "14"] else "канала"
+        )
         await channel.edit(position=channel.position - move_to)
         await ctx.respond(
             f"Позиция канала {channel.mention} "
