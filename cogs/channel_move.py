@@ -28,13 +28,21 @@ class ChannelMove(commands.Cog):
             or ctx.author.guild_permissions.administrator
         ):
             return await ctx.respond("Недостаточно полномочий.")
-        #channel_pos = str(move_to)
-        #channel_name = (
+        # channel_pos = str(move_to)
+        # channel_name = (
         #    "канал"
         #    if channel_pos.endswith("1")
         #    else "каналов" if channel_pos[-2:] not in ["12", "13", "14"] else "канала"
-        #)
-        channel_name = "канал" if move % 10 == 1 else "канала" if move % 10 in (2, 3, 4) else "каналов" if move % 10 == 0 else "Пофиксить! Зовите Гэри!!"
+        # )
+        channel_name = (
+            "канал"
+            if move % 10 == 1
+            else (
+                "канала"
+                if move % 10 in (2, 3, 4)
+                else "каналов" if move % 10 == 0 else "Пофиксить! Зовите Гэри!!"
+            )
+        )
         await channel.edit(position=channel.position - move_to)
         await ctx.respond(
             f"Позиция канала {channel.mention} "
