@@ -34,6 +34,9 @@ class ChannelMove(commands.Cog):
         #    if channel_pos.endswith("1")
         #    else "каналов" if channel_pos[-2:] not in ["12", "13", "14"] else "канала"
         # )
+        await channel.edit(position=channel.position - move_to)
+        up = move_to > 0
+        move_to = abs(move_to)
         channel_name = (
             "канал"
             if move_to == 1 or (move_to > 11 and move_to % 10 == 1)
@@ -47,11 +50,10 @@ class ChannelMove(commands.Cog):
                 )
             )
         )
-        await channel.edit(position=channel.position - move_to)
         await ctx.respond(
             f"Позиция канала {channel.mention} "
-            f"успешно изменена на {abs(move_to)} {channel_name} "
-            f'{"вверх" if move_to>0 else "вниз"}'
+            f"успешно изменена на {move_to} {channel_name} "
+            f'{"вверх" if up else "вниз"}'
         )
 
 
