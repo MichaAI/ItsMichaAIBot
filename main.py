@@ -11,7 +11,7 @@ SETTINGS = {
     "token": None,
     "bot": "Its MichaAIs bot",  # нигде не используются??
     "id": 1147250594776612948,
-    "prefix": "*",
+    "prefix": "!",
     "log_messages": False,
     "owner_id": 629999906429337600,
     "persona_prefix": "Mb:",
