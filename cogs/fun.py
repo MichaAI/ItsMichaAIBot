@@ -1,6 +1,6 @@
 import discord
+import random
 from discord.ext import commands
-
 
 class Fun(commands.Cog):
     def __init__(self, bot):
@@ -11,7 +11,7 @@ class Fun(commands.Cog):
         await ctx.reply(f"Здравствуй, {ctx.message.author.mention}!")
 
     @commands.command(aliases=["bаn", "бaн"])
-    async def hi(self, ctx, *, reason: str = "None"):
+    async def banan(self, ctx, *, reason: str = "None"):
         if not ctx.message.reference:
             return
         original = await ctx.fetch_message(ctx.message.reference.message_id)
@@ -20,18 +20,23 @@ class Fun(commands.Cog):
         )
 
     @commands.command(aliases=["взорвался"])
-    async def boom(self, ctx: discord.ApplicationContext):
+    async def explode(self, ctx: discord.ApplicationContext):
         msg = []
-        async for message in ctx.channel.history(limit=6):
+        async for message in ctx.channel.history(limit=12):
             msg.append(message)
+        parts = [
+            "прилетела голова", 
+            "прилетела правая рука", "прилетела левая рука",
+            "прилетела правая нога", "прилетела левая нога", 
+            "прилетело туловище",
+
+            "прилетело сердце", "прилетели глаза", "прилетел мозг",
+            "прилетел язык", "прилетела печень", "прилетел желудок",
+            "прилетели лёгкие"  
+        ]
+        exploded = [f"В {random.choice(msg).author.mention} {random.choice(parts)}" for i in range(random.randint(2, 10))]
         await ctx.reply(
-            f"{ctx.message.author.mention} взовался! \n"
-            f"В {msg[0].author} прилетела правая рука! \n"
-            f"В {msg[1].author} прилетела левая рука! \n "
-            f"В {msg[2].author} прилетела правя нога! \n "
-            f"В {msg[3].author} прилетела левая нога! \n "
-            f"В {msg[4].author} прилетела голова! \n "
-            f"В {msg[4].author} прилетелo сердце! \n "
+            f"**{ctx.message.author.mention} взовался!**\n" + exploded,
         )
 
 
