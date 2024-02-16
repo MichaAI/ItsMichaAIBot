@@ -24,7 +24,8 @@ class Fun(commands.Cog):
     async def explode(self, ctx: discord.ApplicationContext):
         msg = []
         async for message in ctx.channel.history(limit=100):
-            if message.author == ctx.message.author: continue
+            if message.author == ctx.message.author:
+                continue
             msg.append(message)
         msg = msg[:12]
         parts = [
@@ -50,7 +51,7 @@ class Fun(commands.Cog):
         )
         await ctx.reply(
             f"**{ctx.message.author.mention} взовался!**\n" + exploded,
-            allowed_mentions=discord.AllowedMentions.none
+            allowed_mentions=discord.AllowedMentions.none,
         )
 
 
