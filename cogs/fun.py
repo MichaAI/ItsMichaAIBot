@@ -40,10 +40,12 @@ class Fun(commands.Cog):
             "прилетел желудок",
             "прилетели лёгкие",
         ]
-        exploded = "\n".join([
-            f"**В {random.choice(msg).author.mention} {random.choice(parts)}**"
-            for i in range(random.randint(2, 10))
-        ])
+        exploded = "\n".join(
+            [
+                f"**В {random.choice(msg).author.mention} {random.choice(parts)}**"
+                for i in range(random.randint(2, 10))
+            ]
+        )
         await ctx.reply(
             f"**{ctx.message.author.mention} взовался!**\n" + exploded,
         )
