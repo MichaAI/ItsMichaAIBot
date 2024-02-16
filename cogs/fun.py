@@ -24,10 +24,8 @@ class Fun(commands.Cog):
     async def explode(self, ctx: discord.ApplicationContext):
         msg = []
         async for message in ctx.channel.history(limit=100):
-            if message.author == ctx.message.author:
-                continue
+            if message.author == ctx.message.author: continue
             msg.append(message)
-        msg = msg[:12]
         parts = [
             "прилетела голова",
             "прилетела правая рука",
@@ -43,15 +41,16 @@ class Fun(commands.Cog):
             "прилетел желудок",
             "прилетели лёгкие",
         ]
-        exploded = "\n".join(
-            [
-                f"**В {random.choice(msg).author.mention} {random.choice(parts)}**"
-                for i in range(random.randint(2, 10))
-            ]
-        )
+        msg = msg[:len(parts)-1]
+        exploded = ""
+        for i in range(random.randint(2, 10)):
+            while True:
+                part = random.choice(parts)
+                if part in exploded: continue
+                exploded += f"**В {random.choice(msg).author.mention} {part}**\n"
         await ctx.reply(
-            f"**{ctx.message.author.mention} взовался!**\n" + exploded,
-            allowed_mentions=discord.AllowedMentions.none,
+            f"**{ctx.message.author.mention} взовался!**\n" + exploded.strip(),
+            allowed_mentions=discord.AllowedMentions.none()
         )
 
 
