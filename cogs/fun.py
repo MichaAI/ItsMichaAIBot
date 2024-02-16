@@ -53,6 +53,7 @@ class Fun(commands.Cog):
                 if part in exploded:
                     continue
                 exploded += f"**В {random.choice(msg).author.mention} {part}**\n"
+                break
         await ctx.reply(
             f"**{ctx.message.author.mention} взовался!**\n" + exploded.strip(),
             allowed_mentions=discord.AllowedMentions.none(),
