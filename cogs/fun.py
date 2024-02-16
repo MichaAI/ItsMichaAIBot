@@ -26,7 +26,8 @@ class Fun(commands.Cog):
         async for message in ctx.channel.history(limit=100):
             if message.author == ctx.message.author:
                 continue
-            if message.author in msg: continue
+            if message.author in msg:
+                continue
             msg.append(message.author)
         parts = [
             "прилетела голова",
