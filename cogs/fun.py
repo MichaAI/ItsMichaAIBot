@@ -47,7 +47,7 @@ class Fun(commands.Cog):
         for i in range(random.randint(2, 10)):
             safety_limit = 100
             _ = 0
-            while _<safety_limit:
+            while _ < safety_limit:
                 part = random.choice(parts)
                 _ += 1
                 if part in exploded:
