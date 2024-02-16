@@ -24,14 +24,16 @@ class Fun(commands.Cog):
         msg = []
         async for message in ctx.channel.history(limit=6):
             msg.append(message)
-        await ctx.reply(f"{ctx.message.author.mention} взовался! \n"
-                  f"В {msg[0].author} прилетела правая рука! \n"
-                  f"В {msg[1].author} прилетела левая рука! \n "
-                  f"В {msg[2].author} прилетела правя нога! \n "
-                  f"В {msg[3].author} прилетела левая нога! \n "
-                  f"В {msg[4].author} прилетела голова! \n "
-                  f"В {msg[4].author} прилетелo сердце! \n "
-                  )
+        await ctx.reply(
+            f"{ctx.message.author.mention} взовался! \n"
+            f"В {msg[0].author} прилетела правая рука! \n"
+            f"В {msg[1].author} прилетела левая рука! \n "
+            f"В {msg[2].author} прилетела правя нога! \n "
+            f"В {msg[3].author} прилетела левая нога! \n "
+            f"В {msg[4].author} прилетела голова! \n "
+            f"В {msg[4].author} прилетелo сердце! \n "
+        )
+
 
 def setup(bot):
     bot.add_cog(Fun(bot))
