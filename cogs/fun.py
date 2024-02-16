@@ -26,7 +26,8 @@ class Fun(commands.Cog):
         async for message in ctx.channel.history(limit=100):
             if message.author == ctx.message.author:
                 continue
-            msg.append(message)
+            if message.author in msg: continue
+            msg.append(message.author)
         parts = [
             "прилетела голова",
             "прилетела правая рука",
@@ -52,7 +53,7 @@ class Fun(commands.Cog):
                 _ += 1
                 if part in exploded:
                     continue
-                exploded += f"**В {random.choice(msg).author.mention} {part}**\n"
+                exploded += f"**В {random.choice(msg).mention} {part}**\n"
                 break
         await ctx.reply(
             f"**{ctx.message.author.mention} взовался!**\n" + exploded.strip(),
