@@ -57,7 +57,7 @@ class Fun(commands.Cog):
                 exploded += f"**В {random.choice(msg).mention} {part}**\n"
                 break
         await ctx.reply(
-            f"**{ctx.message.author.mention} взовался!**\n" + exploded.strip(),
+            f"**{ctx.message.author.mention} взорвался!**\n" + exploded.strip(),
             allowed_mentions=discord.AllowedMentions.none(),
         )
 
