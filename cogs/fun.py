@@ -93,5 +93,6 @@ class Fun(commands.Cog):
                 "Вот это ты зря быканул. Такой наглости я не ожидал от вашей персоны."]
         await ctx.reply(random.choice(phrases))
 
+
 def setup(bot):
     bot.add_cog(Fun(bot))
