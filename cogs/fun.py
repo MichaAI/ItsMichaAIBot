@@ -65,5 +65,6 @@ class Fun(commands.Cog):
     async def mood(self, ctx):
         await ctx.reply(f"Настроение испорченно...")
 
+
 def setup(bot):
     bot.add_cog(Fun(bot))
