@@ -1,5 +1,5 @@
-import discord
 import random
+import discord
 from discord.ext import commands
 
 
@@ -99,8 +99,9 @@ class Fun(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if random.randint(1, 20) == 20:
-            await message.channel.send(random.choice(phrases))
+        if random.randint(1, 20) != 20:
+            return
+        await message.channel.send(random.choice(phrases), delete_after=30)
 
 
 def setup(bot):
