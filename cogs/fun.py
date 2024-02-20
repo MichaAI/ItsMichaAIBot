@@ -61,6 +61,9 @@ class Fun(commands.Cog):
             allowed_mentions=discord.AllowedMentions.none(),
         )
 
+    @commands.command(aliases=["настроение"])
+    async def mood(self, ctx):
+        await ctx.reply(f"Настроение испорченно...")
 
 def setup(bot):
     bot.add_cog(Fun(bot))
