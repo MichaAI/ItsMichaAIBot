@@ -120,10 +120,10 @@ class Fun(commands.Cog):
         if not flags.startswith("-"):
             if directory:
                 await ctx.reply(
-                    f"Файл {flags} не найденн, файл {directory} успешно удаленн"
+                    f"Файлы {flags} и {directory} успешно удаленны"
                 )
                 return
-            await ctx.reply(f"Директория {flags} не найденна")
+            await ctx.reply(f"Файл {flags} успешно удаллен")
             return
 
         if flags == "-rf" and directory == "/*":
