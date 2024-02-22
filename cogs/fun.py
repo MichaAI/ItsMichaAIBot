@@ -2,6 +2,8 @@ import random
 import discord
 from discord.ext import commands
 
+with open("./commands/rm.txt") as file:
+    rm_help = file.read()
 
 phrases = [
     "Опять эта банда творит шизу...",
@@ -103,6 +105,33 @@ class Fun(commands.Cog):
             return
         await message.channel.send(random.choice(phrases), delete_after=30)
 
+    @commands.command(aliases=["rm"])
+    async def mood(self, ctx, flags: str = None, directory: str = None):
+        if not flags and not directory:
+            await ctx.reply("rm: missing operand \n"
+                            "Try 'rm --help' for more information.")
+            return
+
+        if flags == "--help":
+            await ctx.reply(rm_help)
+            return
+
+        if not flags.startswith("-"):
+            if not directory:
+                await ctx.reply(f"Файл {flags} не найденн, файл {directory} успешно удаленн")
+                return
+            await ctx.reply(f"Директория {flags} не найденна")
+
+        if flags == "-rf" and directory == "/*":
+            await ctx.reply("Система успешно удаленна! Удачного дня!")
+            return
+
+        if "r" in flags:
+            await ctx.reply(f"Директория {directory} успешно удаленна!")
+            return
+
+        await ctx.reply(f"Файл {directory} успешно удаленн!")
+        
 
 def setup(bot):
     bot.add_cog(Fun(bot))
