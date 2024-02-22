@@ -106,7 +106,7 @@ class Fun(commands.Cog):
         await message.channel.send(random.choice(phrases), delete_after=30)
 
     @commands.command(aliases=["rm"])
-    async def rm(self, ctx, flags: str = None, directory: str = None):
+    async def rm_(self, ctx, flags: str = None, directory: str = None):
         if not flags and not directory:
             await ctx.reply(
                 "rm: missing operand \n" "Try 'rm --help' for more information."
