@@ -108,8 +108,9 @@ class Fun(commands.Cog):
     @commands.command(aliases=["rm"])
     async def mood(self, ctx, flags: str = None, directory: str = None):
         if not flags and not directory:
-            await ctx.reply("rm: missing operand \n"
-                            "Try 'rm --help' for more information.")
+            await ctx.reply(
+                "rm: missing operand \n" "Try 'rm --help' for more information."
+            )
             return
 
         if flags == "--help":
@@ -118,7 +119,9 @@ class Fun(commands.Cog):
 
         if not flags.startswith("-"):
             if not directory:
-                await ctx.reply(f"Файл {flags} не найденн, файл {directory} успешно удаленн")
+                await ctx.reply(
+                    f"Файл {flags} не найденн, файл {directory} успешно удаленн"
+                )
                 return
             await ctx.reply(f"Директория {flags} не найденна")
 
@@ -131,7 +134,7 @@ class Fun(commands.Cog):
             return
 
         await ctx.reply(f"Файл {directory} успешно удаленн!")
-        
+
 
 def setup(bot):
     bot.add_cog(Fun(bot))
