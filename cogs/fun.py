@@ -99,7 +99,7 @@ class Fun(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if random.randint(1, 20) != 20:
+        if random.randint(1, 200) != 200:
             return
         await message.channel.send(random.choice(phrases), delete_after=30)
 
