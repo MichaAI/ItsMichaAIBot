@@ -9,7 +9,12 @@ services:
       - ./token.txt:/token.txt
     depends_on:
       - redis
+      - redis1
   redis:
     image: redis
     ports:
       - "6379"
+  redis1:
+    image: redis
+    ports:
+      - "6380"
