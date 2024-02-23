@@ -18,5 +18,6 @@ class Template(commands.Cog):
     async def on_message(self, message):
         pass
 
+
 def setup(bot):
     bot.add_cog(Template(bot))
