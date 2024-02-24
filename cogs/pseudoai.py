@@ -4,7 +4,7 @@ from discord.ext import commands
 from redis import asyncio as aioredis
 from math import ceil, log2
 
-r = aioredis.StrictRedis(host="redis1", port=6380, decode_responses=True)
+r = aioredis.StrictRedis(host="redis1", port=6380, db=0, decode_responses=True)
 
 
 class Template(commands.Cog):
