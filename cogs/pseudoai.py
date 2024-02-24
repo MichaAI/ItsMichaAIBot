@@ -6,6 +6,7 @@ from math import ceil, log2
 
 r = aioredis.StrictRedis(host="redis1", port=6380, decode_responses=True)
 
+
 class Template(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -13,11 +14,11 @@ class Template(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
         msg_split = message.content.split()
-        content = {i:msg_split.count(i) for i in msg_split}
+        content = {i: msg_split.count(i) for i in msg_split}
 
         for key, value in content.items():
-            await r.set(key, 0, 600*value)
-        
+            await r.set(key, 0, 600 * value)
+
         if message.author == self.bot.user:
             return
 
