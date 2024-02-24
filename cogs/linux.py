@@ -11,7 +11,7 @@ class Linux(commands.Cog):
 
     @commands.command()
     async def pwd(self, ctx: commands.Context):
-        directory = r.get("user_" + str(ctx.message.author.id))
+        directory = await r.get("user_" + str(ctx.message.author.id))
 
         if directory != None:
             return await ctx.reply(directory)
@@ -34,8 +34,9 @@ class Linux(commands.Cog):
     @commands.command()
     async def ls(self, ctx: commands.Context, flags: str = None, directory: str = None):
         if not flags and not directory:
-            w = await rhgett(name=directory, key=".")
+            w = await r.hget(name=directory, key=".")
             print(w)
+            await ctx.reply(w)
 
     @commands.command()
     async def echo(self, ctx: commands.Context, echo_string: str = "** **"):
