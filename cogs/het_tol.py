@@ -11,14 +11,23 @@ class PingCog(commands.Cog):
         self.s.listen()
         self.listen_ping.start()
 
-    @tasks.loop(seconds=2)
+    @tasks.loop(seconds=1)
     async def listen_ping(self):
         ready, _, _ = select.select([self.s], [], [], 0)
-        if ready:
+        if not ready:
+            return
+        try:
+            self.s.settimeout(0.02)
             conn, _ = self.s.accept()
+        except:
+            return
+        try:
+            conn.settimeout(0.02)
             conn.recv(1024)
-            conn.send(b"pong")
-            conn.close()
+        except:
+            pass
+        conn.send(b"pong")
+        conn.close()
 
     def cog_unload(self):
         self.listen_ping.cancel()
