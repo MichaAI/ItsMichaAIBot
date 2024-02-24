@@ -4,7 +4,12 @@ from discord.ext import commands
 from redis import asyncio as aioredis
 from math import ceil, log2
 
+<<<<<<< HEAD
 r = aioredis.StrictRedis(host="localhost", port=6379, decode_responses=True)
+=======
+r = aioredis.StrictRedis(host="redis1", port=6380, db=0, decode_responses=True)
+
+>>>>>>> refs/remotes/origin/master
 
 class Pseudoai(commands.Cog):
     def __init__(self, bot):
@@ -16,12 +21,17 @@ class Pseudoai(commands.Cog):
             return
 
         msg_split = message.content.split()
-        content = {i:msg_split.count(i) for i in msg_split}
+        content = {i: msg_split.count(i) for i in msg_split}
 
         for key, value in content.items():
+<<<<<<< HEAD
             ttl = await r.ttl(key)
             await r.set(key, 0, 600*value + ttl)
         
+=======
+            await r.set(key, 0, 600 * value)
+
+>>>>>>> refs/remotes/origin/master
         if message.author == self.bot.user:
             return
 
