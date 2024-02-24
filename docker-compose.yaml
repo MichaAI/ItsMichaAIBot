@@ -12,7 +12,7 @@ services:
       - redis1
 
   redis:
-    image: redis
+    image: redis:alpine
     ports:
       - "6379"
 
@@ -23,3 +23,9 @@ services:
     hostname: redis1
     domainname: redis1
     command: redis-server --port 6380
+  
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
