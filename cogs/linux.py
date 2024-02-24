@@ -33,7 +33,7 @@ class Linux(commands.Cog):
     @commands.command()
     async def ls(self, ctx: commands.Context, flags:str = None, directory:str = None):
         if not flags and not directory:
-            w = await r.get(name=, key=".")
+            w = await rhgett(name=directory, key=".")
             print(w)
     
     @commands.command()
