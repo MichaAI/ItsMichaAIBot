@@ -21,8 +21,8 @@ class Pseudoai(commands.Cog):
 
         for key, value in content.items():
             ttl = await r.ttl(key)
-            await r.set(key, 0, 600*value + ttl)
-        
+            await r.set(key, 0, 600 * value + ttl)
+
             await r.set(key, 0, 600 * value)
 
         if message.author == self.bot.user:
