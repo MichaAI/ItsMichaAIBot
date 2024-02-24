@@ -4,6 +4,7 @@ from redis import asyncio as aioredis
 
 r = aioredis.StrictRedis(host="localhost", port=6379, decode_responses=True)
 
+
 class Linux(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -31,16 +32,17 @@ class Linux(commands.Cog):
             await ctx.reply("** **")
 
     @commands.command()
-    async def ls(self, ctx: commands.Context, flags:str = None, directory:str = None):
+    async def ls(self, ctx: commands.Context, flags: str = None, directory: str = None):
         if not flags and not directory:
             w = await rhgett(name=directory, key=".")
             print(w)
-    
+
     @commands.command()
     async def echo(self, ctx: commands.Context, echo_string: str = "** **"):
-        await ctx.reply(echo_string, allowed_mentions=discord.AllowedMentions.none(),)
-
-
+        await ctx.reply(
+            echo_string,
+            allowed_mentions=discord.AllowedMentions.none(),
+        )
 
 
 def setup(bot):
