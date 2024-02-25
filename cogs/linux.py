@@ -183,7 +183,9 @@ class Linux(commands.Cog):
             exitc = await exec(ctx, f"pwd {cmdline}")
         except BaseException as e:
             nl = "\n"
-            await ctx.reply(f"{e}\n```{nl.join(traceback.format_exception(type(e), e, e.__traceback__))}\n```")
+            await ctx.reply(
+                f"{e}\n```{nl.join(traceback.format_exception(type(e), e, e.__traceback__))}\n```"
+            )
 
     @commands.command()
     async def cd(self, ctx: commands.Context, *, cmdline: str = ""):
