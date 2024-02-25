@@ -10,8 +10,8 @@ r = aioredis.StrictRedis(host="redis1", port=6380, db=0, decode_responses=True)
 class Pseudoai(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
-    @commands.Cog.listener()
+    
+    #@commands.Cog.listener()
     async def on_message(self, message: discord.Message):
         if message.channel.is_nsfw():
             return
@@ -24,6 +24,9 @@ class Pseudoai(commands.Cog):
             await r.set(key, 0, 600 * value + ttl)
 
         if message.author == self.bot.user:
+            return
+
+        if message.channel.id not in (1076117734208835606, 1106541600034783332, 1073641946129641584):
             return
 
         if random.randint(1, 30) != 1:
