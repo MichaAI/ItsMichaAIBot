@@ -134,7 +134,7 @@ async def exec(ctx, cmdline):
     cmd, flags, args = parse_cmdline(cmdline)
     toprint = ""
     to_globals = {
-        "print": lambda txt: toprint += txt+"\n"
+        "print": lambda *txt, toprint=toprint: toprint += " ".join(txt)+"\n"
     }
     
     env = await read_user_env(ctx.message.author.id)
