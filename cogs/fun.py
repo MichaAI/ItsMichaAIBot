@@ -102,7 +102,11 @@ class Fun(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
 
-        if message.channel.id not in (1076117734208835606, 1106541600034783332, 1073641946129641584):
+        if message.channel.id not in (
+            1076117734208835606,
+            1106541600034783332,
+            1073641946129641584,
+        ):
             return
 
         if random.randint(1, 200) != 200:
