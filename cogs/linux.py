@@ -1,10 +1,10 @@
+import traceback
 import discord
 from discord.ext import commands
 from redis import asyncio as aioredis
 
 r = aioredis.StrictRedis(host="localhost", port=6379, decode_responses=True)
 
-import traceback
 
 def parse(string):
     flags = [""]
