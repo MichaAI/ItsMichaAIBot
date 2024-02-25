@@ -4,6 +4,7 @@ from redis import asyncio as aioredis
 
 r = aioredis.StrictRedis(host="localhost", port=6379, decode_responses=True)
 
+import traceback
 
 def parse(string):
     flags = [""]
@@ -178,7 +179,11 @@ class Linux(commands.Cog):
 
     @commands.command()
     async def pwd(self, ctx: commands.Context, *, cmdline: str = ""):
-        exitc = await exec(ctx, f"pwd {cmdline}")
+        try:
+            exitc = await exec(ctx, f"pwd {cmdline}")
+        except Exception as e:
+            nl = "\n"
+            await ctx.reply(f"{e}\n```{nl.join(traceback.format_exc(e))}\n```")
 
     @commands.command()
     async def cd(self, ctx: commands.Context, *, cmdline: str = ""):
