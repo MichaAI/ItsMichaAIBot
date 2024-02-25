@@ -57,7 +57,7 @@ def smartsplit(string):
 def parse_cmdline(cmdline):
     commandline = smartsplit(cmdline)
     command = commandline[0]
-    return command, parse(" ".join(commandline[1:]))
+    return command, *parse(" ".join(commandline[1:]))
 
 
 async def read_user_env(uid):
