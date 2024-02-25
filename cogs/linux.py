@@ -177,19 +177,19 @@ class Linux(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def pwd(self, ctx: commands.Context, *, cmdline: str=""):
+    async def pwd(self, ctx: commands.Context, *, cmdline: str = ""):
         exitc = await exec(ctx, f"pwd {cmdline}")
 
     @commands.command()
-    async def cd(self, ctx: commands.Context, *, cmdline: str=""):
+    async def cd(self, ctx: commands.Context, *, cmdline: str = ""):
         exitc = await exec(ctx, f"pwd {cmdline}")
 
     @commands.command()
-    async def ls(self, ctx: commands.Context, *, cmdline: str=""):
+    async def ls(self, ctx: commands.Context, *, cmdline: str = ""):
         exitc = await exec(ctx, f"ls {cmdline}")
 
     @commands.command()
-    async def echo(self, ctx: commands.Context, *, cmdline: str=""):
+    async def echo(self, ctx: commands.Context, *, cmdline: str = ""):
         await ctx.reply(
             cmdline if cmdline else "\* *",
             allowed_mentions=discord.AllowedMentions.none(),
