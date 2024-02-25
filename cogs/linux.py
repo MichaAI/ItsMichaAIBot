@@ -91,7 +91,7 @@ def form_fs_path(path):
     return "/" + "/".join(formed_path)
 
 
-async def pwd(to_globals, env, flags, args):
+async def pwd_runner(to_globals, env, flags, args):
     for glob in to_globals:
         globals()[glob] = to_globals[glob]
 
@@ -114,7 +114,7 @@ async def pwd(to_globals, env, flags, args):
     return 0
 
 
-async def cd(to_globals, env, flags, args):
+async def cd_runner(to_globals, env, flags, args):
     for glob in to_globals:
         globals()[glob] = to_globals[glob]
 
@@ -157,9 +157,9 @@ async def exec(ctx, cmdline):
     rcode = 1
 
     if cmd == "pwd":
-        rcode = await pwd(to_globals, env, flags, args)
+        rcode = await pwd_runner(to_globals, env, flags, args)
     elif cmd == "cd":
-        rcode = await cd(to_globals, env, flags, args)
+        rcode = await cd_runner(to_globals, env, flags, args)
     else:
         await ctx.reply(f"msh: command not found: {cmd}")
     if rcode is None:
@@ -169,7 +169,7 @@ async def exec(ctx, cmdline):
         rcode = 1
     env["?"] = int(rcode)
     await write_user_env(ctx.message.author.id, env)
-    await ctx.reply(toprint if toprint else "\* *")
+    await ctx.reply(toprint if toprint else "** **")
     return env["?"]
 
 
@@ -181,7 +181,7 @@ class Linux(commands.Cog):
     async def pwd(self, ctx: commands.Context, *, cmdline: str = ""):
         try:
             exitc = await exec(ctx, f"pwd {cmdline}")
-        except Exception as e:
+        except BaseException as e:
             nl = "\n"
             await ctx.reply(f"{e}\n```{nl.join(traceback.format_exc(e))}\n```")
 
@@ -196,7 +196,7 @@ class Linux(commands.Cog):
     @commands.command()
     async def echo(self, ctx: commands.Context, *, cmdline: str = ""):
         await ctx.reply(
-            cmdline if cmdline else "\* *",
+            cmdline if cmdline else "** **",
             allowed_mentions=discord.AllowedMentions.none(),
         )
 
