@@ -133,8 +133,10 @@ async def cd(to_globals, env, flags, args):
 async def exec(ctx, cmdline):
     cmd, flags, args = parse_cmdline(cmdline)
     toprint = ""
+    def _print(*txt):
+        toprint += " ".join(txt)+"\n"
     to_globals = {
-        "print": lambda *txt, toprint=toprint: toprint += " ".join(txt)+"\n"
+        "print": _print
     }
     
     env = await read_user_env(ctx.message.author.id)
