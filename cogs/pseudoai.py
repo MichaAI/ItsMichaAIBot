@@ -11,7 +11,7 @@ class Pseudoai(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # @commands.Cog.listener()
+    @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
         if message.channel.is_nsfw:
             return
