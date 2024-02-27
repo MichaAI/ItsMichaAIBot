@@ -13,14 +13,13 @@ class Pseudoai(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        if message.channel.is_nsfw:
-            return
+
         msg_split = message.content.split()
         content = {i: msg_split.count(i) for i in msg_split}
 
         for key, value in content.items():
             ttl = await r.ttl(key)
-            await r.set(key, 0, 600 * value + ttl)
+            await r.set(key, 0, (600 * value) + ttl)
 
         if message.author == self.bot.user:
             return
