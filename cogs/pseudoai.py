@@ -48,13 +48,13 @@ class Pseudoai(commands.Cog):
     @staticmethod
     async def redis_inserting(key: str, value: int) -> None:
         if key[0].isupper() and key[-1] in ".?!‽¡":
-            await r.hset("start-end", key, key)
+            await r.hset("start-end", key, str(key))
             return None
         if key[0].isupper():
-            await r.hset("start", key, key)
+            await r.hset("start", key, str(key))
             return None
         if key[-1] in ".?!‽¡":
-            await r.hset("end", key, key)
+            await r.hset("end", key, str(key))
             return None
         ttl = await r.ttl(key)
         await r.set(key, 0, (600 * value) + ttl)
