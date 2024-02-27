@@ -1,5 +1,5 @@
 import asyncio
-    import random
+import random
 import discord
 from discord.ext import commands
 from redis import asyncio as aioredis
@@ -67,9 +67,6 @@ class Pseudoai(commands.Cog):
             return None
         ttl = await r.ttl(key)
         await r.set(key, 0, (600 * value) + ttl)
-
-
-
 
 
 def setup(bot):
