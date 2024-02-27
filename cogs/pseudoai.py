@@ -13,10 +13,6 @@ class Pseudoai(commands.Cog):
 
     # @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        print(message.channel)
-        if message.channel.is_nsfw:
-            return
-
         msg_split = message.content.split()
         content = {i: msg_split.count(i) for i in msg_split}
 
