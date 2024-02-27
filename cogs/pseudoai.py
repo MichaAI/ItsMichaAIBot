@@ -33,8 +33,33 @@ class Pseudoai(commands.Cog):
 
         if random.randint(1, 30) != 1:
             return
+        
+        keys = await self.redis_geting()
+        await message.channel.send(" ".join(keys))
+    
+    @commands.command()
+    async def random_phrase(self, ctx):
+        keys = await self.redis_geting()
+        await ctx.reply(" ".join(keys), allowed_mentions=discord.AllowedMentions.none())
 
+    @staticmethod
+    async def redis_inserting(key: str, value: int) -> None:
+        if key[0].isupper() and key[-1] in ".?!‽¡":
+            await r.hset("start-end", key, key)
+            return None
+        if key[0].isupper():
+            await r.hset("start", key, key)
+            return None
+        if key[-1] in ".?!‽¡":
+            await r.hset("end", key, key)
+            return None
+        ttl = await r.ttl(key)
+        await r.set(key, 0, (600 * value) + ttl)
+
+    @staticmethod
+    async def redis_geting() -> list[str]:
         keys = []
+
         for _ in range(random.randint(1, 4)):
             if random.randint(1, 7) == 7:
                 st_end = await r.hrandfield("start-end")
@@ -52,21 +77,7 @@ class Pseudoai(commands.Cog):
             end = await r.hrandfield("end")
             keys.append(end)
 
-        await message.channel.send(" ".join(keys))
-
-    @staticmethod
-    async def redis_inserting(key: str, value: int) -> None:
-        if key[0].isupper() and key[-1] in ".?!‽¡":
-            await r.hset("start-end", key, key)
-            return None
-        if key[0].isupper():
-            await r.hset("start", key, key)
-            return None
-        if key[-1] in ".?!‽¡":
-            await r.hset("end", key, key)
-            return None
-        ttl = await r.ttl(key)
-        await r.set(key, 0, (600 * value) + ttl)
+        return keys
 
 
 def setup(bot):
