@@ -33,10 +33,15 @@ class Pseudoai(commands.Cog):
 
         if random.randint(1, 30) != 1:
             return
-        
+
         keys = await self.redis_geting()
+<<<<<<< HEAD
         await message.channel.send(" ".join([str(x) for x in keys]))
     
+=======
+        await message.channel.send(" ".join(keys))
+
+>>>>>>> refs/remotes/origin/master
     @commands.command()
     async def random_phrase(self, ctx):
         keys = await self.redis_geting()
