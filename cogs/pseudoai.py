@@ -35,12 +35,12 @@ class Pseudoai(commands.Cog):
             return
         
         keys = await self.redis_geting()
-        await message.channel.send(" ".join(keys))
+        await message.channel.send(" ".join([str(x) for x in keys]))
     
     @commands.command()
     async def random_phrase(self, ctx):
         keys = await self.redis_geting()
-        await ctx.reply(" ".join(keys), allowed_mentions=discord.AllowedMentions.none())
+        await ctx.reply(" ".join([str(x) for x in keys]), allowed_mentions=discord.AllowedMentions.none())
 
     @staticmethod
     async def redis_inserting(key: str, value: int) -> None:
