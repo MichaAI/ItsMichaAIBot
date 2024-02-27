@@ -7,5 +7,5 @@ RUN python3 -m pip install -r requirements.txt
 # specify the port number the container should expose
 EXPOSE 3000
 
-# rn the application
+# run the application
 CMD ["python", "main.py"] 

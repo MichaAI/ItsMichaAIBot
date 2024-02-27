@@ -38,16 +38,7 @@ try:
 except Exception as e:
     print(f"ERROR! Failed to read tokenfile: {e}")
     exit(1)
-print(
-    SETTINGS["mongo"]["prefix"]
-    + SETTINGS["mongo"]["login"][:-2]
-    + ":"
-    + SETTINGS["mongo"]["passwd"][:-2]
-    + "@"
-    + SETTINGS["mongo"]["host"]
-    + ":"
-    + SETTINGS["mongo"]["port"]
-)
+
 client = pymongo.MongoClient(
     SETTINGS["mongo"]["prefix"]
     + SETTINGS["mongo"]["login"][:-1]
