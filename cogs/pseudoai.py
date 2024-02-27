@@ -1,4 +1,5 @@
-import random
+import asyncio
+    import random
 import discord
 from discord.ext import commands
 from redis import asyncio as aioredis
@@ -18,8 +19,7 @@ class Pseudoai(commands.Cog):
         content = {i: msg_split.count(i) for i in msg_split}
 
         for key, value in content.items():
-            ttl = await r.ttl(key)
-            await r.set(key, 0, (600 * value) + ttl)
+            asyncio.create_task(self.redis_inserting(key, value))
 
         if message.author == self.bot.user:
             return
@@ -35,14 +35,41 @@ class Pseudoai(commands.Cog):
             return
 
         keys = []
+        for _ in range(random.randint(1, 4)):
+            if random.randint(1, 7) == 7:
+                st_end = await r.hrandfield("start-end")
+                keys.append(st_end)
 
-        for _ in range(random.randint(5, 15)):
-            key = await r.randomkey()
-            keys.append(key)
-            ttl = await r.ttl(key)
-            await r.expire(key, ttl - 1)
+            start = await r.hrandfield("start")
+            keys.append(start)
+
+            for _ in range(random.randint(3, 10)):
+                key = await r.randomkey()
+                keys.append(key)
+                ttl = await r.ttl(key)
+                await r.expire(key, ttl - 1)
+
+            end = await r.hrandfield("end")
+            keys.append(end)
 
         await message.channel.send(" ".join(keys))
+
+    @staticmethod
+    async def redis_inserting(key: str, value: int) -> None:
+        if key[0].isupper() and key[-1] in ".?!‽¡":
+            await r.hset("start-end", key, key)
+            return None
+        if key[0].isupper():
+            await r.hset("start", key, key)
+            return None
+        if key[-1] in ".?!‽¡":
+            await r.hset("end", key, key)
+            return None
+        ttl = await r.ttl(key)
+        await r.set(key, 0, (600 * value) + ttl)
+
+
+
 
 
 def setup(bot):
