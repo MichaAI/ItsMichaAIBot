@@ -17,8 +17,7 @@ class Fastsdxl(commands.Cog):
                     "Content-Type": "application/json",
                     "Authorization": f"Key {self.bot.fal_key}",
                 },
-                data=json.dumps({"prompt": promt,
-                                 'enable_safety_checker': True}),
+                data=json.dumps({"prompt": promt, "enable_safety_checker": True}),
             )
             response = await response.json()
 
@@ -53,7 +52,7 @@ class Fastsdxl(commands.Cog):
                         "prompt": promt,
                         "num_images": number_images,
                         "negative_prompt": negative,
-                        'enable_safety_checker': True
+                        "enable_safety_checker": True,
                     }
                 ),
             )
