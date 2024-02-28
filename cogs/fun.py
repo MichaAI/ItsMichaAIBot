@@ -53,7 +53,7 @@ class Fun(commands.Cog):
         await ctx.reply(
             f"Пользователь {original.author.mention} был забанен пользователем {ctx.message.author.mention} по причине `{reason}`"
         )
-     
+
     # @commands.command(aliases=["взорвался"])
     async def explode(self, ctx: discord.ApplicationContext):
         msg = []
