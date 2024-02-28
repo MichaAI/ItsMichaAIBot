@@ -28,12 +28,18 @@ SETTINGS = {
     },
 }
 
+bot = commands.Bot(
+    command_prefix=commands.when_mentioned_or(SETTINGS["prefix"]),
+    intents=discord.Intents.all(),
+)
+
 try:
     with open("./token.txt", "r") as f:
         secretdata = f.readlines()
         SETTINGS["token"] = secretdata[0]
         SETTINGS["mongo"]["login"] = secretdata[1]
         SETTINGS["mongo"]["passwd"] = secretdata[2]
+        bot.fal_key = secretdata[3][:-1]
         del secretdata
 except Exception as e:
     print(f"ERROR! Failed to read tokenfile: {e}")
@@ -49,11 +55,6 @@ client = pymongo.MongoClient(
     + ":"
     + SETTINGS["mongo"]["port"]
     + "/admin"
-)
-
-bot = commands.Bot(
-    command_prefix=commands.when_mentioned_or(SETTINGS["prefix"]),
-    intents=discord.Intents.all(),
 )
 
 
