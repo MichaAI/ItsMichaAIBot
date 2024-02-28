@@ -9,6 +9,7 @@ class Fastsdxl(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=["image"])
+    @commands.cooldown(2, 10, commands.BucketType.user)
     async def fastsdxl_command(self, ctx: commands.Context, *, promt: str):
         async with aiohttp.ClientSession() as session:
             response = await session.post(
@@ -30,6 +31,7 @@ class Fastsdxl(commands.Cog):
         await ctx.reply("Ай как плохо такое генерировать")
 
     @commands.slash_command(name="image", description="fast image generator")
+    @commands.cooldown(2, 10, commands.BucketType.user)
     async def move_channel(
         self, ctx, promt: str, number_images: int = 1, negative: str = ""
     ):
@@ -66,6 +68,7 @@ class Fastsdxl(commands.Cog):
                     ]
                 )
             )
+
             return
         if not any(response["has_nsfw_concepts"]):
             await ctx.respond(
