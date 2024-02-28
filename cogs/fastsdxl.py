@@ -9,7 +9,7 @@ class Fastsdxl(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=["image"])
-    @commands.cooldown(2, 10, commands.BucketType.user)
+    @commands.cooldown(2, 60, commands.BucketType.user)
     async def fastsdxl_command(self, ctx: commands.Context, *, promt: str):
         async with aiohttp.ClientSession() as session:
             response = await session.post(
