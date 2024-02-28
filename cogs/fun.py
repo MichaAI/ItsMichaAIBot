@@ -1,4 +1,5 @@
 import random
+import aiohttp
 import discord
 from discord.ext import commands
 
@@ -141,6 +142,18 @@ class Fun(commands.Cog):
             return
 
         await ctx.reply(f"Файл {directory} успешно удаленн!")
+
+    @commands.command()
+    async def joke(self, ctx: commands.Context):
+        async with aiohttp.ClientSession() as session:
+            response = await session.get(
+                url="https://official-joke-api.appspot.com/random_joke",
+            )
+            response = await response.json()
+        embed = discord.Embed(title="Joke:")
+        embed.add_field(name=response["setup"], value=f'||{response["punchline"]}||')
+        embed.set_footer(text=f'Type: {response["type"]}; ID: {response["id"]}')
+        await ctx.reply(embed=embed) 
 
 
 def setup(bot):
