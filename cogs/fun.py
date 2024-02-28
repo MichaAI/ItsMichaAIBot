@@ -53,8 +53,8 @@ class Fun(commands.Cog):
         await ctx.reply(
             f"Пользователь {original.author.mention} был забанен пользователем {ctx.message.author.mention} по причине `{reason}`"
         )
-
-    @commands.command(aliases=["взорвался"])
+     
+    # @commands.command(aliases=["взорвался"])
     async def explode(self, ctx: discord.ApplicationContext):
         msg = []
         async for message in ctx.channel.history(limit=100):
@@ -95,7 +95,7 @@ class Fun(commands.Cog):
             allowed_mentions=discord.AllowedMentions.none(),
         )
 
-    @commands.command(aliases=["фраза-фелмса"])
+    # @commands.command(aliases=["фраза-фелмса"])
     async def mood(self, ctx):
         await ctx.reply(random.choice(phrases))
 

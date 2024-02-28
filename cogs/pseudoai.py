@@ -15,14 +15,14 @@ class Pseudoai(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
 
+        if message.author == self.bot.user:
+            return
+
         msg_split = message.content.split()
         content = {i: msg_split.count(i) for i in msg_split}
 
         for key, value in content.items():
             asyncio.create_task(self.redis_inserting(key, value))
-
-        if message.author == self.bot.user:
-            return
 
         if message.channel.id not in (
             1076117734208835606,
@@ -60,7 +60,7 @@ class Pseudoai(commands.Cog):
         await r.set(key, 0, (600 * value) + ttl)
 
     @staticmethod
-    async def redis_geting() -> list[str]:
+    async def redis_geting():
         keys = []
 
         for _ in range(random.randint(1, 4)):
