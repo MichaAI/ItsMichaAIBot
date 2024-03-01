@@ -1,5 +1,6 @@
-import socket
 import select
+import socket
+
 from discord.ext import commands, tasks
 
 

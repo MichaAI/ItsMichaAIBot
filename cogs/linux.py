@@ -1,4 +1,5 @@
 import traceback
+
 import discord
 from discord.ext import commands
 from redis import asyncio as aioredis

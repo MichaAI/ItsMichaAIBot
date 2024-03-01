@@ -1,6 +1,8 @@
-import redis
 import json
-from typing import Union, Dict, Tuple, Any, Awaitable
+from typing import Any, Awaitable, Dict, Tuple, Union
+
+import redis
+
 from main import client
 
 r = redis.StrictRedis(host="redis", port="6379", db=0)

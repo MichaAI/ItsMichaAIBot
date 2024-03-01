@@ -1,13 +1,14 @@
-import discord
-from discord.ext import commands
 import asyncio
+import atexit
 import os
 import signal
-import atexit
-import pymongo
-from custom_help_command import CustomHelpCommand
 
+import discord
+import pymongo
 import uvloop
+from discord.ext import commands
+
+from custom_help_command import CustomHelpCommand
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 

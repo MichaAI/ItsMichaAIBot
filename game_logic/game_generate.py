@@ -1,5 +1,6 @@
-from perlin_noise import PerlinNoise
 import datetime
+
+from perlin_noise import PerlinNoise
 
 width = 13
 height = 13

@@ -1,10 +1,12 @@
-import random
 import importlib
+import random
 import sys
-from discord.ext import commands
+
 import discord
-from game_logic.game_generate import generate_game, find_start
+from discord.ext import commands
+
 from game_logic.game_dbwork import game_get_from_db, insert_to_db
+from game_logic.game_generate import find_start, generate_game
 
 
 class GameButtons(discord.ui.View):

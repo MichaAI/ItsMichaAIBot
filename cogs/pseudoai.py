@@ -1,9 +1,9 @@
 import asyncio
 import random
+
 import discord
 from discord.ext import commands
 from redis import asyncio as aioredis
-
 
 r = aioredis.StrictRedis(host="redis1", port=6380, db=0, decode_responses=True)
 
