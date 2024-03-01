@@ -105,7 +105,7 @@ class Fun(commands.Cog):
         embed = discord.Embed(title="Joke:")
         embed.add_field(name=response["setup"], value=f'||{response["punchline"]}||')
         embed.set_footer(text=f'Type: {response["type"]}; ID: {response["id"]}')
-        await ctx.reply(embed=embed) 
+        await ctx.reply(embed=embed)
 
 
 def setup(bot):
