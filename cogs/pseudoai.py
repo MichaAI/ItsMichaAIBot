@@ -35,7 +35,10 @@ class Pseudoai(commands.Cog):
             return
 
         keys = await self.redis_geting()
-        await message.channel.send(" ".join([str(x) for x in keys]), allowed_mentions=discord.AllowedMentions.none())
+        await message.channel.send(
+            " ".join([str(x) for x in keys]),
+            allowed_mentions=discord.AllowedMentions.none(),
+        )
 
     @commands.command()
     async def random_phrase(self, ctx):
