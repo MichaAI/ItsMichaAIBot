@@ -22,8 +22,7 @@ class Pseudoai(commands.Cog):
         msg_split = message.content.split()
         content = {i: msg_split.count(i) for i in msg_split}
 
-        for key, value in content.items():
-            asyncio.create_task(self.redis_inserting(key, value))
+        asyncio.create_task(self.redis_inserting(content))
 
         if message.channel.id not in (
             1076117734208835606,
