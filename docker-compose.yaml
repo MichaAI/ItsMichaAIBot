@@ -14,9 +14,12 @@ services:
   redis:
     image: redis:alpine
     ports:
-      - "6379-6380:6379"
-    deploy:
-      replicas: 2
+      - "6379:6379"
+
+  redis1:
+    image: redis:alpine
+    ports:
+      - "6380:6379"
 
   watchtower:
     image: containrrr/watchtower
