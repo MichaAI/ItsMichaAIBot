@@ -58,7 +58,7 @@ class Pseudoai(commands.Cog):
             if not key2:
                 continue
             await r.set(
-                key.lower().translate(str.maketrans("", "", string.punctuation)),
+                key2,
                 0,
                 (600 * value) + ttl,
             )
