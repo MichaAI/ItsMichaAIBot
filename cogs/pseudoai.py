@@ -45,8 +45,8 @@ class Pseudoai(commands.Cog):
     async def random_phrase(self, ctx):
         keys = await self.redis_geting()
         await ctx.reply(
-                keys,
-                allowed_mentions=discord.AllowedMentions.none(),
+            keys,
+            allowed_mentions=discord.AllowedMentions.none(),
         )
 
     @staticmethod
@@ -55,7 +55,9 @@ class Pseudoai(commands.Cog):
             if "http" in key:
                 continue
             ttl = await r.ttl(key)
-            await r.set(key.lower().translate(None, string.punctuation), 0, (600 * value) + ttl)
+            await r.set(
+                key.lower().translate(None, string.punctuation), 0, (600 * value) + ttl
+            )
 
     @staticmethod
     async def redis_geting():
