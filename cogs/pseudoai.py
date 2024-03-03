@@ -70,7 +70,7 @@ class Pseudoai(commands.Cog):
         for _ in range(random.randint(1, 4)):
             sentence = ""
             for _ in range(random.randint(3, 10)):
-                sentence += await r.randomkey() + ""
+                sentence += await r.randomkey() + " "
             keys += " " + sentence[0].upper() + sentence[1:] + random.choice(".!?")
 
         return keys
