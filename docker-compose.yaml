@@ -14,16 +14,10 @@ services:
   redis:
     image: redis:alpine
     ports:
-      - "6379"
+      - "6379-6380:6379"
+    deploy:
+      replicas: 2
 
-  redis1:
-    image: redis:alpine
-    ports:
-      - "6380"
-    hostname: redis1
-    domainname: redis1
-    command: redis-server --port 6380
-  
   watchtower:
     image: containrrr/watchtower
     volumes:
