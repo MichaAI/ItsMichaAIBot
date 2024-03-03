@@ -1,5 +1,6 @@
 import asyncio
 import random
+import string
 
 import discord
 from discord.ext import commands
@@ -36,7 +37,7 @@ class Pseudoai(commands.Cog):
 
         keys = await self.redis_geting()
         await message.channel.send(
-            " ".join([str(x) for x in keys]),
+            keys,
             allowed_mentions=discord.AllowedMentions.none(),
         )
 
@@ -44,44 +45,27 @@ class Pseudoai(commands.Cog):
     async def random_phrase(self, ctx):
         keys = await self.redis_geting()
         await ctx.reply(
-            " ".join([str(x) for x in keys]),
-            allowed_mentions=discord.AllowedMentions.none(),
+                keys,
+                allowed_mentions=discord.AllowedMentions.none(),
         )
 
     @staticmethod
-    async def redis_inserting(key: str, value: int) -> None:
-        if key[0].isupper() and key[-1] in ".?!‽¡":
-            await r.hset("start-end", key, str(key))
-            return None
-        if key[0].isupper():
-            await r.hset("start", key, str(key))
-            return None
-        if key[-1] in ".?!‽¡":
-            await r.hset("end", key, str(key))
-            return None
-        ttl = await r.ttl(key)
-        await r.set(key, 0, (600 * value) + ttl)
+    async def redis_inserting(content: dict) -> None:
+        for key, value in content.items():
+            if "http" in key:
+                continue
+            ttl = await r.ttl(key)
+            await r.set(key.lower().translate(None, string.punctuation), 0, (600 * value) + ttl)
 
     @staticmethod
     async def redis_geting():
-        keys = []
+        keys = ""
 
         for _ in range(random.randint(1, 4)):
-            if random.randint(1, 7) == 7:
-                st_end = await r.hrandfield("start-end")
-                keys.append(st_end)
-
-            start = await r.hrandfield("start")
-            keys.append(start)
-
+            sentence = ""
             for _ in range(random.randint(3, 10)):
-                key = await r.randomkey()
-                keys.append(key)
-                ttl = await r.ttl(key)
-                await r.expire(key, ttl - 1)
-
-            end = await r.hrandfield("end")
-            keys.append(end)
+                sentence += await r.randomkey() + ""
+            keys += " " + sentence[0].upper() + sentence[1:] + random.choice(".!?")
 
         return keys
 
