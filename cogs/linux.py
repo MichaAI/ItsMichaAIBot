@@ -1,5 +1,6 @@
 import traceback
 
+import aiohttp
 import discord
 from discord.ext import commands
 from redis import asyncio as aioredis
@@ -202,6 +203,15 @@ class Linux(commands.Cog):
             cmdline if cmdline else "** **",
             allowed_mentions=discord.AllowedMentions.none(),
         )
+
+    @commands.command()
+    async def curl(self, ctx: commands.Context, url: str):
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                await ctx.reply(f"Status: {response.status} \n\n"
+
+                                f"Json: {await response.json()}")
+
 
 
 def setup(bot):
