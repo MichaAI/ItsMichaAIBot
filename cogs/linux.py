@@ -204,14 +204,6 @@ class Linux(commands.Cog):
             allowed_mentions=discord.AllowedMentions.none(),
         )
 
-    @commands.command()
-    async def curl(self, ctx: commands.Context, url: str):
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                await ctx.reply(
-                    f"Status: {response.status} \n\n" f"Json: {await response.json()}"
-                )
-
 
 def setup(bot):
     bot.add_cog(Linux(bot))
