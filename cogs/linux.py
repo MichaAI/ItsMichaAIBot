@@ -208,10 +208,9 @@ class Linux(commands.Cog):
     async def curl(self, ctx: commands.Context, url: str):
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
-                await ctx.reply(f"Status: {response.status} \n\n"
-
-                                f"Json: {await response.json()}")
-
+                await ctx.reply(
+                    f"Status: {response.status} \n\n" f"Json: {await response.json()}"
+                )
 
 
 def setup(bot):
