@@ -55,7 +55,7 @@ class Pseudoai(commands.Cog):
                 continue
             ttl = await r.ttl(key)
             await r.set(
-                key.lower().translate(string.punctuation), 0, (600 * value) + ttl
+                key.lower().translate(str.maketrans('', '', string.punctuation)), 0, (600 * value) + ttl
             )
 
     @staticmethod
