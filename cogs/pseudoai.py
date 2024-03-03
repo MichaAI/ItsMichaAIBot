@@ -54,8 +54,11 @@ class Pseudoai(commands.Cog):
             if "http" in key:
                 continue
             ttl = await r.ttl(key)
+            key2 = key.lower().translate(str.maketrans('', '', string.punctuation))
+            if not key2:
+                continue
             await r.set(
-                key.lower().translate(str.maketrans('', '', string.punctuation)), 0, (600 * value) + ttl
+                key2, 0, (600 * value) + ttl
             )
 
     @staticmethod
